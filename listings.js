@@ -70,7 +70,7 @@ const listingsData = [
   // ── LISTING 1 ──────────────────────────────────────────────────
   {
     id: 1,
-    address:     '1120 Esplanade #15',
+    address:     '1020 Esplanade #15',
     city:        'Chico, California 95926',
     price:       '$1,250/mo',          // Display price (shown on site)
     priceNum:    1250,                 // Price as a number (used for sorting)
