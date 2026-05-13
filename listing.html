@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Listing | Madsen Properties</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;700&family=Martel:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Listing page extras ── */
+    .listing-hero {
+      position: relative;
+      background: #111;
+      height: 560px;
+      overflow: hidden;
+    }
+    @media (max-width: 640px) { .listing-hero { height: 300px; } }
+
+    .hero-img-track {
+      display: flex;
+      height: 100%;
+      transition: transform .4s ease;
+    }
+    .hero-img-track img {
+      flex-shrink: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+      image-rendering: high-quality;
+    }
+
+    /* Side thumbnail rail */
+    .hero-rail {
+      position: absolute;
+      top: 0; right: 0; bottom: 0;
+      width: 110px;
+      background: rgba(0,0,0,.55);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 8px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255,255,255,.2) transparent;
+    }
+    .hero-rail img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      cursor: pointer;
+      border: 2px solid transparent;
+      border-radius: 3px;
+      opacity: .65;
+      transition: opacity .18s, border-color .18s;
+      flex-shrink: 0;
+    }
+    .hero-rail img.active,
+    .hero-rail img:hover { opacity: 1; border-color: #bc5d1f; }
+    @media (max-width: 640px) { .hero-rail { display: none; } }
+
+    /* Counter + nav */
+    .hero-controls {
+      position: absolute;
+      bottom: 14px; left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      z-index: 5;
+    }
+    .hero-nav-btn {
+      background: rgba(255,255,255,.2);
+      border: 1px solid rgba(255,255,255,.35);
+      color: #fff;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .18s;
+    }
+    .hero-nav-btn:hover { background: rgba(255,255,255,.4); }
+    .hero-count {
+      background: rgba(0,0,0,.5);
+      color: #fff;
+      font-size: 13px;
+      padding: 4px 12px;
+      border-radius: 20px;
+    }
+    .hero-expand {
+      position: absolute;
+      top: 14px; right: 126px;
+      background: rgba(0,0,0,.5);
+      color: #fff;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .18s;
+      font-family: 'Martel', serif;
+      letter-spacing: .04em;
+    }
+    .hero-expand:hover { background: rgba(0,0,0,.75); }
+
+    /* Breadcrumb */
+    .breadcrumb {
+      padding: 14px 0;
+      font-size: 13px;
+      color: #999;
+      font-weight: 300;
+    }
+    .breadcrumb a { color: #bc5d1f; }
+    .breadcrumb a:hover { color: #ab4000; }
+    .breadcrumb span { margin: 0 6px; color: #ddd; }
+
+    /* Detail layout */
+    .detail-layout {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 40px;
+      align-items: start;
+      padding-bottom: 60px;
+    }
+    @media (max-width: 860px) {
+      .detail-layout { grid-template-columns: 1fr; }
+    }
+
+    /* Left — main content */
+    .detail-address {
+      font-family: 'Martel', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 4px;
+    }
+    .detail-city { font-size: 15px; color: #999; font-weight: 300; margin-bottom: 18px; }
+    .detail-badges { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+    .detail-status {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .06em; padding: 4px 12px; border-radius: 3px;
+    }
+    .detail-meta-row {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      padding: 18px 0;
+      border-top: 1px solid #f0f0f0;
+      border-bottom: 1px solid #f0f0f0;
+      margin-bottom: 24px;
+    }
+    .detail-meta-item { display: flex; flex-direction: column; gap: 2px; }
+    .detail-meta-label { font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: #aaa; font-weight: 700; }
+    .detail-meta-val { font-size: 1.05rem; font-weight: 700; color: #333; }
+
+    .detail-section-title {
+      font-family: 'Martel', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #ab4000;
+      margin-bottom: 10px;
+      margin-top: 28px;
+    }
+    .detail-desc {
+      font-size: 15px;
+      color: #6f6f6f;
+      font-weight: 300;
+      line-height: 27px;
+    }
+
+    /* Features list */
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+      margin-top: 4px;
+    }
+    .feature-item {
+      font-size: 14px;
+      color: #6f6f6f;
+      font-weight: 300;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .feature-item::before {
+      content: '✓';
+      color: #bc5d1f;
+      font-weight: 700;
+      font-size: 12px;
+      flex-shrink: 0;
+    }
+
+    /* Right — sticky sidebar */
+    .detail-sidebar {
+      position: sticky;
+      top: 84px;
+    }
+    .sidebar-card {
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,.06);
+    }
+    .sidebar-price-block {
+      background: #ab4000;
+      color: #fff;
+      padding: 20px 22px;
+    }
+    .sidebar-price {
+      font-size: 1.8rem;
+      font-weight: 700;
+      font-family: 'Roboto', sans-serif;
+      line-height: 1;
+    }
+    .sidebar-price span { font-size: 14px; font-weight: 300; opacity: .8; }
+    .sidebar-avail { font-size: 13px; opacity: .85; margin-top: 4px; }
+    .sidebar-body { padding: 18px 22px; }
+    .sidebar-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid #f5f5f5;
+      font-size: 14px;
+    }
+    .sidebar-row:last-of-type { border-bottom: none; }
+    .sidebar-row-label { color: #999; font-weight: 300; }
+    .sidebar-row-val { color: #333; font-weight: 700; }
+    .btn-apply-full {
+      display: block;
+      background: #bc5d1f;
+      color: #fff !important;
+      text-align: center;
+      font-family: 'Martel', serif;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 13px;
+      border-radius: 0 0 10px 10px;
+      margin: 0 -22px -18px;
+      transition: background .18s;
+      margin-top: 16px;
+    }
+    .btn-apply-full:hover { background: #ab4000; }
+    .sidebar-contact {
+      margin-top: 14px;
+      background: #f9f9f9;
+      border: 1px solid #e5e5e5;
+      border-radius: 10px;
+      padding: 16px 18px;
+    }
+    .sidebar-contact h4 {
+      font-family: 'Martel', serif;
+      font-size: 13px;
+      color: #6f6f6f;
+      font-weight: 700;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+    .sidebar-contact-item { font-size: 13px; color: #6f6f6f; font-weight: 300; margin-bottom: 6px; }
+    .sidebar-contact-item a { color: #bc5d1f; }
+
+    /* Map placeholder */
+    .map-placeholder {
+      width: 100%;
+      aspect-ratio: 16/7;
+      background: #f0f0f0;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #bbb;
+      font-size: 14px;
+      font-weight: 300;
+      margin-top: 4px;
+      overflow: hidden;
+    }
+    .map-placeholder iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* Lightbox (reused from main site) */
+    .lb-caption {
+      position: fixed;
+      bottom: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(255,255,255,.7);
+      font-size: 13px;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Back to top -->
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">&#8679;</button>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+  <button class="lb-close" onclick="closeLb()" aria-label="Close">&#10005;</button>
+  <button class="lb-prev"  onclick="lbNav(-1)" aria-label="Previous">&#8249;</button>
+  <div class="lb-img-wrap"><img id="lbImg" src="" alt="Property photo" /></div>
+  <button class="lb-next"  onclick="lbNav(1)" aria-label="Next">&#8250;</button>
+  <div class="lb-address" id="lbAddress"></div>
+  <div class="lb-counter" id="lbCounter"></div>
+</div>
+
+<!-- HEADER -->
+<header role="banner">
+  <div class="header-inner">
+    <div class="logo">
+      <a href="index.html" aria-label="Madsen Properties — home">
+        <img src="https://madsenpropertymgmt.com/public/uploads/logo.png" alt="Madsen Properties" />
+      </a>
+    </div>
+    <div class="header-right">
+      <div class="portal-links">
+        <a href="https://madsenpropertieschico.managebuilding.com/Resident/PublicPages/Home.aspx" target="_blank" rel="noopener">Tenant Sign-In</a>
+        <span>|</span>
+        <a href="https://madsenpropertieschico.managebuilding.com/Manager/PublicPages/Login.aspx" target="_blank" rel="noopener">Owner Login</a>
+      </div>
+      <nav aria-label="Main navigation">
+        <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="navList" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-list" id="navList" role="list">
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="index.html#rentals">Rentals</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+          <li><a href="resident-benefits.html">Resident Benefits</a></li>
+          <li><a href="https://madsenpropertymgmt.com/apply/" target="_blank" rel="noopener" class="btn-apply-nav">Apply Now</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<!-- PHOTO HERO -->
+<div class="listing-hero" id="listingHero">
+  <div class="hero-img-track" id="heroTrack"></div>
+  <div class="hero-rail" id="heroRail"></div>
+  <button class="hero-expand" onclick="openLb(0)">&#9974; View all photos</button>
+  <div class="hero-controls">
+    <button class="hero-nav-btn" onclick="heroNav(-1)">&#8249;</button>
+    <span class="hero-count" id="heroCount">1 / 1</span>
+    <button class="hero-nav-btn" onclick="heroNav(1)">&#8250;</button>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main>
+  <div class="container">
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <span>›</span>
+      <a href="index.html#rentals">Rentals</a>
+      <span>›</span>
+      <span id="bcAddress">Loading…</span>
+    </div>
+
+    <div class="detail-layout">
+
+      <!-- LEFT: Detail content -->
+      <div class="detail-main">
+        <div class="detail-address" id="detailAddress"></div>
+        <div class="detail-city" id="detailCity"></div>
+        <div class="detail-badges" id="detailBadges"></div>
+
+        <div class="detail-meta-row" id="detailMeta"></div>
+
+        <div class="detail-section-title">About this property</div>
+        <div class="detail-desc" id="detailDesc"></div>
+
+        <div class="detail-section-title" id="featuresTitle" style="display:none">Features &amp; Amenities</div>
+        <div class="features-grid" id="detailFeatures"></div>
+
+        <div class="detail-section-title">Location</div>
+        <div class="map-placeholder" id="detailMap">
+          <span>Loading map…</span>
+        </div>
+
+        <div class="detail-section-title">All Photos</div>
+        <div class="photo-grid" id="detailPhotoGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;margin-top:4px;"></div>
+      </div>
+
+      <!-- RIGHT: Sidebar -->
+      <div class="detail-sidebar">
+        <div class="sidebar-card">
+          <div class="sidebar-price-block">
+            <div class="sidebar-price" id="sidePrice"></div>
+            <div class="sidebar-avail" id="sideAvail"></div>
+          </div>
+          <div class="sidebar-body">
+            <div id="sideRows"></div>
+            <a href="https://madsenpropertymgmt.com/apply/" target="_blank" rel="noopener" class="btn-apply-full">Apply Now →</a>
+          </div>
+        </div>
+
+        <div class="sidebar-contact">
+          <h4>Contact Us</h4>
+          <!-- UPDATE with real phone/email -->
+          <div class="sidebar-contact-item">📞 <a href="tel:+15305551234">(530) 555-1234</a></div>
+          <div class="sidebar-contact-item">✉️ <a href="mailto:info@madsenpropertymgmt.com">info@madsenpropertymgmt.com</a></div>
+          <div class="sidebar-contact-item">🕐 Mon–Fri: 9am – 5pm</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="https://madsenpropertymgmt.com/public/uploads/logo.png" alt="Madsen Properties" />
+        <p>Award-winning property management serving Northern California. Voted CN&amp;R Best Property Management 2022 &amp; 2023.</p>
+      </div>
+      <div>
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html#about">About Us</a></li>
+          <li><a href="index.html#rentals">Rentals</a></li>
+          <li><a href="https://madsenpropertymgmt.com/apply/" target="_blank">Apply Now</a></li>
+          <li><a href="index.html#contact">Contact Us</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Portals</h4>
+        <ul>
+          <li><a href="https://madsenpropertieschico.managebuilding.com/Resident/PublicPages/Home.aspx" target="_blank">Tenant Sign-In</a></li>
+          <li><a href="https://madsenpropertieschico.managebuilding.com/Manager/PublicPages/Login.aspx" target="_blank">Owner Login</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Madsen Properties. All rights reserved.</p>
+      <p>Serving Northern California</p>
+    </div>
+  </div>
+</footer>
+
+<script src="listings.js"></script>
+<script>
+// ── Get listing id from URL ?id=X ──
+const params  = new URLSearchParams(window.location.search);
+const listingId = parseInt(params.get('id'));
+const listing = listings.find(l => l.id === listingId);
+
+if (!listing) {
+  document.querySelector('.detail-main').innerHTML =
+    '<p style="padding:40px 0;color:#999;">Listing not found. <a href="index.html">Back to rentals</a></p>';
+} else {
+  initPage(listing);
+}
+
+function initPage(l) {
+  // Page title
+  document.title = l.address + ' | Madsen Properties';
+
+  // Breadcrumb
+  document.getElementById('bcAddress').textContent = l.address;
+
+  // Address / city
+  document.getElementById('detailAddress').textContent = l.address;
+  document.getElementById('detailCity').textContent = l.city;
+
+  // Status badge
+  const badgeCls = l.status === 'available' ? 'badge-now' : l.status === 'soon' ? 'badge-soon' : 'badge-approved';
+  document.getElementById('detailBadges').innerHTML =
+    `<span class="detail-status ${badgeCls}">${l.statusLabel}</span>`;
+
+  // Meta row
+  const bedLabel = l.beds === 0 ? 'Studio' : l.beds + ' Bed' + (l.beds > 1 ? 's' : '');
+  document.getElementById('detailMeta').innerHTML = `
+    <div class="detail-meta-item"><div class="detail-meta-label">Rent</div><div class="detail-meta-val" style="color:#ab4000">${l.price}</div></div>
+    <div class="detail-meta-item"><div class="detail-meta-label">Beds</div><div class="detail-meta-val">${bedLabel}</div></div>
+    <div class="detail-meta-item"><div class="detail-meta-label">Baths</div><div class="detail-meta-val">${l.baths}</div></div>
+    <div class="detail-meta-item"><div class="detail-meta-label">Available</div><div class="detail-meta-val">${l.available}</div></div>
+    ${l.yearBuilt ? `<div class="detail-meta-item"><div class="detail-meta-label">Year Built</div><div class="detail-meta-val">${l.yearBuilt}</div></div>` : ''}
+  `;
+
+  // Description (clean up "AVAILABLE NOW/SOON" prefix from desc)
+  const cleanDesc = l.desc.replace(/^(AVAILABLE NOW|AVAILABLE SOON)[^—–-]*[—–-]?\s*/i, '');
+  document.getElementById('detailDesc').textContent = cleanDesc;
+
+  // Sidebar
+  document.getElementById('sidePrice').innerHTML = l.price + ' <span>/ month</span>';
+  document.getElementById('sideAvail').textContent = 'Available: ' + l.available;
+  document.getElementById('sideRows').innerHTML = `
+    <div class="sidebar-row"><span class="sidebar-row-label">Bedrooms</span><span class="sidebar-row-val">${bedLabel}</span></div>
+    <div class="sidebar-row"><span class="sidebar-row-label">Bathrooms</span><span class="sidebar-row-val">${l.baths}</span></div>
+    <div class="sidebar-row"><span class="sidebar-row-label">Status</span><span class="sidebar-row-val">${l.statusLabel}</span></div>
+    ${l.yearBuilt ? `<div class="sidebar-row"><span class="sidebar-row-label">Year Built</span><span class="sidebar-row-val">${l.yearBuilt}</span></div>` : ''}
+    <div class="sidebar-row"><span class="sidebar-row-label">City</span><span class="sidebar-row-val">${l.city.split(',')[0]}</span></div>
+  `;
+
+  // Map
+  const mapAddr = encodeURIComponent(l.address + ', ' + l.city);
+  document.getElementById('detailMap').innerHTML =
+    `<iframe loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+      src="https://www.google.com/maps?q=${mapAddr}&output=embed"
+      title="Map of ${l.address}" allowfullscreen></iframe>`;
+
+  // Photos hero + grid
+  initPhotos(l);
+
+  // Hamburger
+  const hamburger = document.getElementById('hamburger');
+  const navList   = document.getElementById('navList');
+  hamburger.addEventListener('click', () => {
+    const open = navList.classList.toggle('open');
+    hamburger.classList.toggle('open', open);
+    hamburger.setAttribute('aria-expanded', String(open));
+  });
+  document.addEventListener('click', e => {
+    if (!hamburger.contains(e.target) && !navList.contains(e.target)) {
+      navList.classList.remove('open');
+      hamburger.classList.remove('open');
+    }
+  });
+
+  // Back to top
+  const btt = document.getElementById('backToTop');
+  window.addEventListener('scroll', () => btt.classList.toggle('visible', window.scrollY > 300));
+}
+
+// ── Photo hero ──
+let heroI = 0;
+let heroImgs = [];
+
+function initPhotos(l) {
+  heroImgs = l.images;
+  const track = document.getElementById('heroTrack');
+  const rail  = document.getElementById('heroRail');
+  const grid  = document.getElementById('detailPhotoGrid');
+
+  track.innerHTML = heroImgs.map((src, i) =>
+    `<img src="${src}" alt="${l.address} — photo ${i+1}"
+      loading="${i === 0 ? 'eager' : 'lazy'}"
+      onerror="this.style.display='none'" />`
+  ).join('');
+
+  rail.innerHTML = heroImgs.map((src, i) =>
+    `<img src="${src}" alt="" class="${i === 0 ? 'active' : ''}"
+      loading="lazy" onclick="goToSlide(${i})"
+      onerror="this.style.display='none'" />`
+  ).join('');
+
+  grid.innerHTML = heroImgs.map((src, i) =>
+    `<div style="aspect-ratio:4/3;overflow:hidden;border-radius:6px;cursor:zoom-in;border:1px solid #eee;"
+      onclick="openLb(${i})">
+      <img src="${src}" alt="" loading="lazy"
+        style="width:100%;height:100%;object-fit:cover;transition:transform .3s"
+        onmouseover="this.style.transform='scale(1.05)'"
+        onmouseout="this.style.transform='scale(1)'"
+        onerror="this.parentElement.style.display='none'" />
+    </div>`
+  ).join('');
+
+  updateHeroCount();
+}
+
+function goToSlide(n) {
+  heroI = (n + heroImgs.length) % heroImgs.length;
+  document.getElementById('heroTrack').style.transform = `translateX(-${heroI * 100}%)`;
+  document.querySelectorAll('#heroRail img').forEach((img, i) => img.classList.toggle('active', i === heroI));
+  updateHeroCount();
+}
+
+function heroNav(dir) { goToSlide(heroI + dir); }
+
+function updateHeroCount() {
+  document.getElementById('heroCount').textContent = (heroI + 1) + ' / ' + heroImgs.length;
+}
+
+// ── Lightbox ──
+let lbI = 0;
+
+function openLb(idx) {
+  lbI = idx; updateLb();
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLb() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function lbNav(dir) {
+  lbI = (lbI + dir + heroImgs.length) % heroImgs.length;
+  updateLb();
+}
+function updateLb() {
+  document.getElementById('lbImg').src = heroImgs[lbI];
+  document.getElementById('lbAddress').textContent = listing ? listing.address + ' — ' + listing.city : '';
+  document.getElementById('lbCounter').textContent = (lbI + 1) + ' / ' + heroImgs.length;
+}
+document.getElementById('lightbox').addEventListener('click', e => {
+  if (e.target === document.getElementById('lightbox')) closeLb();
+});
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('lightbox').classList.contains('open')) return;
+  if (e.key === 'ArrowLeft')  lbNav(-1);
+  if (e.key === 'ArrowRight') lbNav(1);
+  if (e.key === 'Escape')     closeLb();
+});
+</script>
+</body>
+</html>

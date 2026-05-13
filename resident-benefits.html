@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="The Madsen Properties Resident Benefits Package — credit building, identity protection, liability insurance, move-in concierge, and more." />
+  <title>Resident Benefit Package | Madsen Properties</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;700&family=Martel:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .page-hero {
+      background: #f7f7f7;
+      border-bottom: 1px solid #e5e5e5;
+      padding: 48px 0 40px;
+    }
+    .page-hero h1 { font-family: 'Roboto', sans-serif; font-size: clamp(1.8rem,4vw,2.4rem); font-weight: 700; color: #ab4000; margin-bottom: 8px; }
+    .page-hero p { color: #6f6f6f; font-size: 16px; font-weight: 300; max-width: 580px; }
+
+    /* Pricing cards */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin: 32px 0;
+    }
+    @media (max-width: 640px) { .pricing-grid { grid-template-columns: 1fr; } }
+
+    .pricing-card {
+      border: 2px solid #e5e5e5;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: box-shadow .2s;
+    }
+    .pricing-card:hover { box-shadow: 0 8px 28px rgba(0,0,0,.08); }
+    .pricing-card.featured { border-color: #bc5d1f; }
+
+    .pricing-header {
+      background: #f7f7f7;
+      padding: 22px 24px;
+      border-bottom: 1px solid #e5e5e5;
+    }
+    .pricing-card.featured .pricing-header { background: #bc5d1f; border-color: #bc5d1f; }
+    .pricing-title { font-family: 'Martel', serif; font-size: 1.15rem; font-weight: 700; color: #333; }
+    .pricing-card.featured .pricing-title { color: #fff; }
+    .pricing-amount { font-size: 2rem; font-weight: 700; color: #ab4000; font-family: 'Roboto', sans-serif; line-height: 1; margin: 8px 0 2px; }
+    .pricing-card.featured .pricing-amount { color: #fff; }
+    .pricing-period { font-size: 13px; color: #999; font-weight: 300; }
+    .pricing-card.featured .pricing-period { color: rgba(255,255,255,.75); }
+    .pricing-badge {
+      display: inline-block;
+      background: #fff;
+      color: #bc5d1f;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-top: 8px;
+    }
+
+    .pricing-body { padding: 22px 24px; }
+    .pricing-feature {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid #f5f5f5;
+      font-size: 14px;
+      color: #6f6f6f;
+      font-weight: 300;
+      line-height: 1.5;
+    }
+    .pricing-feature:last-child { border-bottom: none; }
+    .pricing-check { color: #bc5d1f; font-weight: 700; font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+    .pricing-feature.dimmed { opacity: .4; }
+    .pricing-feature.dimmed .pricing-check { color: #ccc; }
+
+    /* Benefits list */
+    .benefits-list { display: flex; flex-direction: column; gap: 0; }
+    .benefit-item {
+      display: flex;
+      gap: 16px;
+      padding: 18px 0;
+      border-bottom: 1px solid #f0f0f0;
+      align-items: flex-start;
+    }
+    .benefit-item:last-child { border-bottom: none; }
+    .benefit-icon {
+      width: 40px; height: 40px;
+      background: #fdf3ec;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .benefit-title { font-weight: 700; color: #333; font-size: 15px; margin-bottom: 3px; }
+    .benefit-desc { font-size: 14px; color: #6f6f6f; font-weight: 300; line-height: 22px; }
+
+    /* Insurance section */
+    .insurance-section {
+      background: #f7f7f7;
+      border-radius: 12px;
+      padding: 28px 30px;
+      margin-top: 12px;
+    }
+    .insurance-section h3 {
+      font-family: 'Martel', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #ab4000;
+      margin-bottom: 14px;
+    }
+    .insurance-section p {
+      font-size: 14px;
+      color: #6f6f6f;
+      font-weight: 300;
+      line-height: 23px;
+      margin-bottom: 12px;
+    }
+
+    .option-card {
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 8px;
+      padding: 18px 20px;
+      margin-bottom: 14px;
+    }
+    .option-card h4 { font-family: 'Martel', serif; font-size: 14px; font-weight: 700; color: #333; margin-bottom: 8px; }
+    .option-card p { font-size: 13px; color: #6f6f6f; font-weight: 300; line-height: 21px; margin: 0; }
+    .option-card ul { margin: 8px 0 0 18px; }
+    .option-card ul li { font-size: 13px; color: #6f6f6f; font-weight: 300; line-height: 22px; }
+
+    /* CTA box */
+    .cta-box {
+      background: #ab4000;
+      border-radius: 12px;
+      padding: 32px 36px;
+      text-align: center;
+      color: #fff;
+      margin-top: 40px;
+    }
+    .cta-box h3 { font-family: 'Martel', serif; font-size: 1.3rem; margin-bottom: 10px; }
+    .cta-box p { font-size: 15px; opacity: .85; font-weight: 300; margin-bottom: 20px; }
+    .btn-cta-white {
+      display: inline-block;
+      background: #fff;
+      color: #ab4000 !important;
+      font-family: 'Martel', serif;
+      font-weight: 700;
+      font-size: 15px;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background .18s;
+    }
+    .btn-cta-white:hover { background: #f7f7f7; }
+  </style>
+</head>
+<body>
+
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">&#8679;</button>
+
+<!-- HEADER -->
+<header role="banner">
+  <div class="header-inner">
+    <div class="logo">
+      <a href="index.html" aria-label="Madsen Properties — home">
+        <img src="https://madsenpropertymgmt.com/public/uploads/logo.png" alt="Madsen Properties" />
+      </a>
+    </div>
+    <div class="header-right">
+      <div class="portal-links">
+        <a href="https://madsenpropertieschico.managebuilding.com/Resident/PublicPages/Home.aspx" target="_blank" rel="noopener">Tenant Sign-In</a>
+        <span>|</span>
+        <a href="https://madsenpropertieschico.managebuilding.com/Manager/PublicPages/Login.aspx" target="_blank" rel="noopener">Owner Login</a>
+      </div>
+      <nav aria-label="Main navigation">
+        <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="navList" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-list" id="navList" role="list">
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="index.html#rentals">Rentals</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+          <li><a href="resident-benefits.html" style="color:#bc5d1f;">Resident Benefits</a></li>
+          <li><a href="https://madsenpropertymgmt.com/apply/" target="_blank" rel="noopener" class="btn-apply-nav">Apply Now</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="container">
+    <div class="breadcrumb" style="margin-bottom:12px;">
+      <a href="index.html">Home</a>
+      <span>›</span>
+      <span>Resident Benefit Package</span>
+    </div>
+    <h1>Resident Benefit Package</h1>
+    <p>Savings and convenient professional services that make taking care of your home second nature — included with your lease.</p>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main>
+  <section class="section">
+    <div class="container">
+
+      <!-- Intro image -->
+      <img src="https://madsenpropertymgmt.com/public/uploads/Untitled-1.jpg"
+           alt="Resident Benefit Package"
+           style="width:100%;max-height:360px;object-fit:cover;border-radius:10px;margin-bottom:36px;"
+           onerror="this.style.display='none'" />
+
+      <!-- Intro text -->
+      <div class="section-label">Overview</div>
+      <h2 class="section-title">What is the RBP?</h2>
+      <p class="section-sub" style="max-width:700px;">The Madsen Properties Resident Benefits Package (RBP) delivers savings and convenient, professional services that make taking care of your home second nature. Enroll at the time of application — payable with your monthly rent.</p>
+
+      <!-- Pricing cards -->
+      <div class="pricing-grid">
+        <div class="pricing-card">
+          <div class="pricing-header">
+            <div class="pricing-title">Standard RBP</div>
+            <div class="pricing-amount">$35<span style="font-size:1rem;font-weight:300;">/mo</span></div>
+            <div class="pricing-period">Added to monthly rent</div>
+          </div>
+          <div class="pricing-body">
+            <div class="pricing-feature"><span class="pricing-check">✓</span> Credit building</div>
+            <div class="pricing-feature"><span class="pricing-check">✓</span> Identity protection</div>
+            <div class="pricing-feature"><span class="pricing-check">✓</span> Liability insurance</div>
+            <div class="pricing-feature"><span class="pricing-check">✓</span> Move-in concierge service</div>
+            <div class="pricing-feature"><span class="pricing-check">✓</span> Resident rewards program</div>
+            <div class="pricing-feature"><span class="pricing-check">✓</span> Online portal access</div>
+            <div class="pricing-feature dimmed"><span class="pricing-check">–</span> HVAC filter delivery</div>
+          </div>
+        </div>
+
+        <div class="pricing-card featured">
+          <div class="pricing-header">
+            <div class="pricing-title">RBP + HVAC Filters</div>
+            <div class="pricing-amount">$40<span style="font-size:1rem;font-weight:300;opacity:.8;">/mo</span></div>
+            <div class="pricing-period">Added to monthly rent</div>
+            <span class="pricing-badge">Includes Filter Delivery</span>
+          </div>
+          <div class="pricing-body">
+            <div class="pricing-feature"><span class="pricing-check">✓</span> Credit building</div>
+            <div class="pricing-feature"><span class="pricing-check">✓</span> Identity protection</div>
+            <div class="pricing-feature"><span class="pricing-check">✓</span> Liability insurance</div>
+            <div class="pricing-feature"><span class="pricing-check">✓</span> Move-in concierge service</div>
+            <div class="pricing-feature"><span class="pricing-check">✓</span> Resident rewards program</div>
+            <div class="pricing-feature"><span class="pricing-check">✓</span> Online portal access</div>
+            <div class="pricing-feature"><span class="pricing-check">✓</span> HVAC air filter delivery every ~180 days</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Benefits breakdown -->
+      <div style="margin-top:40px;">
+        <div class="section-label">What's Included</div>
+        <h2 class="section-title">Your Benefits, Explained</h2>
+
+        <div class="benefits-list" style="margin-top:20px;">
+          <div class="benefit-item">
+            <div class="benefit-icon">🏠</div>
+            <div>
+              <div class="benefit-title">HVAC Air Filter Delivery</div>
+              <div class="benefit-desc">Air filters delivered directly to your door approximately every 180 days. Available only with the $40/month package. Subject to property mechanicals or other limitations.</div>
+            </div>
+          </div>
+          <div class="benefit-item">
+            <div class="benefit-icon">🛡️</div>
+            <div>
+              <div class="benefit-title">Liability Insurance</div>
+              <div class="benefit-desc">Coverage that meets all lease requirements from an A-rated carrier — $100,000 in property damage and personal liability. Included as part of your RBP so you don't have to find your own policy.</div>
+            </div>
+          </div>
+          <div class="benefit-item">
+            <div class="benefit-icon">📦</div>
+            <div>
+              <div class="benefit-title">Move-In Concierge Service</div>
+              <div class="benefit-desc">One call to set up all your utility services, cable, and internet. We make moving in as smooth as possible.</div>
+            </div>
+          </div>
+          <div class="benefit-item">
+            <div class="benefit-icon">🏅</div>
+            <div>
+              <div class="benefit-title">Resident Rewards Program</div>
+              <div class="benefit-desc">Earn rewards for paying your rent on time. Good habits get recognized and rewarded.</div>
+            </div>
+          </div>
+          <div class="benefit-item">
+            <div class="benefit-icon">📈</div>
+            <div>
+              <div class="benefit-title">Credit Building</div>
+              <div class="benefit-desc">Your on-time rent payments are reported to credit bureaus to help boost your credit score over time.</div>
+            </div>
+          </div>
+          <div class="benefit-item">
+            <div class="benefit-icon">🔒</div>
+            <div>
+              <div class="benefit-title">Identity Protection</div>
+              <div class="benefit-desc">Proactive monitoring to help protect your personal information and alert you to potential identity threats.</div>
+            </div>
+          </div>
+          <div class="benefit-item">
+            <div class="benefit-icon">💻</div>
+            <div>
+              <div class="benefit-title">Online Portal Access</div>
+              <div class="benefit-desc">Full access to your resident account — view documents, submit maintenance requests, communicate with your property manager, and pay rent online.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider" style="margin-top:40px;"></div>
+
+      <!-- Insurance detail -->
+      <div style="margin-top:40px;">
+        <div class="section-label">Insurance Details</div>
+        <h2 class="section-title">Liability Insurance Requirements &amp; Options</h2>
+        <p style="color:#6f6f6f;font-size:15px;font-weight:300;line-height:26px;max-width:700px;margin-bottom:24px;">
+          The Landlord requires all tenants to obtain liability coverage of at least <strong>$100,000</strong> in property damage and personal liability from an A-rated carrier, maintained throughout the entire lease term. You have two options to satisfy this requirement:
+        </p>
+
+        <div class="option-card">
+          <h4>Option 1 — Master Policy (Automatic Enrollment)</h4>
+          <p>If you do not provide evidence of required insurance coverage by the lease commencement date, you will be automatically enrolled into the Landlord's Master Policy as part of the RBP. Coverage begins on your lease effective date and continues for the full term. The monthly premium is <strong>$11.95</strong>, included in your RBP fee.</p>
+        </div>
+
+        <div class="option-card">
+          <h4>Option 2 — Tenant's Own Policy</h4>
+          <p>You may find, purchase, and maintain your own policy that meets the landlord's requirements. You must provide evidence of coverage by the lease commencement date. Your policy must meet all of the following criteria:</p>
+          <ul>
+            <li>Purchased from an A- rated carrier</li>
+            <li>Meets or exceeds $100,000 in property damage and personal liability</li>
+            <li>Madsen Properties is listed as additional interest</li>
+            <li>Madsen Properties address listed as: PO Box 660121, Dallas, TX 75266</li>
+          </ul>
+          <p style="margin-top:10px;">To submit proof of your own insurance, visit: <a href="http://insurance.residentforms.com/" target="_blank" rel="noopener" style="color:#bc5d1f;">insurance.residentforms.com</a></p>
+        </div>
+
+        <div class="insurance-section" style="margin-top:0;">
+          <h3>Important Notes</h3>
+          <p>It is the tenant's sole responsibility to timely pay premiums directly to their insurance provider to avoid cancellation of coverage. If a tenant's policy lapses or is cancelled, the tenant will be automatically enrolled into the Master Policy and charged the applicable monthly premium.</p>
+          <p>Your choice of insurance option shall not affect whether your lease application is approved or the terms of your lease agreement.</p>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="cta-box">
+        <h3>Ready to Apply?</h3>
+        <p>The Resident Benefits Package is included when you apply for any Madsen Properties listing. Start your application today.</p>
+        <a href="https://madsenpropertymgmt.com/apply/" target="_blank" rel="noopener" class="btn-cta-white">Start Your Application →</a>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<!-- FOOTER -->
+<footer role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="https://madsenpropertymgmt.com/public/uploads/logo.png" alt="Madsen Properties" />
+        <p>Award-winning property management serving Northern California. Voted CN&amp;R Best Property Management 2022 &amp; 2023.</p>
+      </div>
+      <div>
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="index.html#rentals">Rentals</a></li>
+          <li><a href="https://madsenpropertymgmt.com/apply/" target="_blank">Apply Now</a></li>
+          <li><a href="resident-benefits.html">Resident Benefits</a></li>
+          <li><a href="index.html#contact">Contact Us</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Portals</h4>
+        <ul>
+          <li><a href="https://madsenpropertieschico.managebuilding.com/Resident/PublicPages/Home.aspx" target="_blank">Tenant Sign-In</a></li>
+          <li><a href="https://madsenpropertieschico.managebuilding.com/Manager/PublicPages/Login.aspx" target="_blank">Owner Login</a></li>
+          <li><a href="https://madsenpropertymgmt.com/apply/" target="_blank">Online Application</a></li>
+        </ul>
+        <h4 style="margin-top:18px;">Service Area</h4>
+        <p style="font-size:13px;color:#999;font-weight:300;line-height:20px;">Chico · Paradise · Magalia<br>Oroville · Hamilton City</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Madsen Properties. All rights reserved.</p>
+      <p>Serving Northern California</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+const hamburger = document.getElementById('hamburger');
+const navList   = document.getElementById('navList');
+hamburger.addEventListener('click', () => {
+  const open = navList.classList.toggle('open');
+  hamburger.classList.toggle('open', open);
+  hamburger.setAttribute('aria-expanded', String(open));
+});
+document.addEventListener('click', e => {
+  if (!hamburger.contains(e.target) && !navList.contains(e.target)) {
+    navList.classList.remove('open');
+    hamburger.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+  }
+});
+const btt = document.getElementById('backToTop');
+window.addEventListener('scroll', () => btt.classList.toggle('visible', window.scrollY > 400));
+</script>
+</body>
+</html>

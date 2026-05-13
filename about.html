@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Meet the Madsen Properties team — award-winning property management in Chico, Oroville, Paradise and surrounding areas." />
+  <title>About Us | Madsen Properties</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;700&family=Martel:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Page hero ── */
+    .page-hero {
+      background: #f7f7f7;
+      border-bottom: 1px solid #e5e5e5;
+      padding: 48px 0 40px;
+    }
+    .page-hero h1 {
+      font-family: 'Roboto', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.4rem);
+      font-weight: 700;
+      color: #ab4000;
+      margin-bottom: 8px;
+    }
+    .page-hero p {
+      color: #6f6f6f;
+      font-size: 16px;
+      font-weight: 300;
+      max-width: 560px;
+    }
+
+    /* ── Main photo ── */
+    .about-main-img {
+      width: 100%;
+      max-height: 420px;
+      object-fit: cover;
+      object-position: center 30%;
+      border-radius: 10px;
+      margin-bottom: 40px;
+      display: block;
+    }
+
+    /* ── Team grid ── */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 28px;
+      margin-top: 12px;
+    }
+    .team-card {
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: box-shadow .2s, transform .2s;
+    }
+    .team-card:hover {
+      box-shadow: 0 8px 28px rgba(0,0,0,.09);
+      transform: translateY(-3px);
+    }
+    .team-photo {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      background: #f3f3f3;
+    }
+    .team-info { padding: 18px 20px 22px; }
+    .team-name {
+      font-family: 'Martel', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 4px;
+    }
+    .team-title {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: #bc5d1f;
+      margin-bottom: 10px;
+    }
+    .team-bio {
+      font-size: 14px;
+      color: #6f6f6f;
+      font-weight: 300;
+      line-height: 23px;
+    }
+    .team-quote {
+      margin-top: 12px;
+      padding: 10px 14px;
+      border-left: 3px solid #bc5d1f;
+      background: #fdf8f5;
+      font-size: 13px;
+      font-style: italic;
+      color: #888;
+      font-weight: 300;
+      border-radius: 0 4px 4px 0;
+    }
+    .team-bio-soon {
+      font-size: 14px;
+      color: #bbb;
+      font-weight: 300;
+      font-style: italic;
+    }
+
+    /* ── Values section ── */
+    .values-section { background: #f7f7f7; padding: 52px 0; margin-top: 52px; }
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+      margin-top: 28px;
+    }
+    .value-card {
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 10px;
+      padding: 22px 20px;
+      text-align: center;
+    }
+    .value-icon { font-size: 2rem; margin-bottom: 10px; }
+    .value-title { font-family: 'Martel', serif; font-size: 1rem; font-weight: 700; color: #ab4000; margin-bottom: 6px; }
+    .value-desc { font-size: 13px; color: #6f6f6f; font-weight: 300; line-height: 21px; }
+
+    /* ── Connect section ── */
+    .connect-section { padding: 52px 0; text-align: center; }
+    .social-links { display: flex; justify-content: center; gap: 16px; margin-top: 20px; flex-wrap: wrap; }
+    .social-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #fff; border: 1px solid #e0e0e0; border-radius: 8px;
+      padding: 10px 20px; font-size: 14px; font-weight: 700;
+      font-family: 'Martel', serif; color: #6f6f6f; text-decoration: none;
+      transition: all .18s;
+    }
+    .social-btn:hover { border-color: #bc5d1f; color: #bc5d1f; background: #fdf3ec; }
+
+    /* Awards strip */
+    .awards-strip {
+      display: flex; justify-content: center; align-items: center;
+      gap: 30px; padding: 32px 0; border-top: 1px solid #eee;
+      flex-wrap: wrap;
+    }
+    .awards-strip img { height: 80px; width: auto; }
+  </style>
+</head>
+<body>
+
+<!-- Back to top -->
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">&#8679;</button>
+
+<!-- HEADER -->
+<header role="banner">
+  <div class="header-inner">
+    <div class="logo">
+      <a href="index.html" aria-label="Madsen Properties — home">
+        <img src="https://madsenpropertymgmt.com/public/uploads/logo.png" alt="Madsen Properties" />
+      </a>
+    </div>
+    <div class="header-right">
+      <div class="portal-links">
+        <a href="https://madsenpropertieschico.managebuilding.com/Resident/PublicPages/Home.aspx" target="_blank" rel="noopener">Tenant Sign-In</a>
+        <span>|</span>
+        <a href="https://madsenpropertieschico.managebuilding.com/Manager/PublicPages/Login.aspx" target="_blank" rel="noopener">Owner Login</a>
+      </div>
+      <nav aria-label="Main navigation">
+        <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="navList" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-list" id="navList" role="list">
+          <li><a href="about.html" style="color:#bc5d1f;">About Us</a></li>
+          <li><a href="index.html#rentals">Rentals</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+          <li><a href="resident-benefits.html">Resident Benefits</a></li>
+          <li><a href="https://madsenpropertymgmt.com/apply/" target="_blank" rel="noopener" class="btn-apply-nav">Apply Now</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="container">
+    <div class="breadcrumb" style="margin-bottom:12px;">
+      <a href="index.html">Home</a>
+      <span>›</span>
+      <span>About Us</span>
+    </div>
+    <h1>About Us</h1>
+    <p>Meet the team behind Madsen Properties — award-winning property management serving Northern California since 2009.</p>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<main>
+  <section class="section">
+    <div class="container">
+
+      <!-- Main team photo -->
+      <img src="https://madsenpropertymgmt.com/public/uploads/Madsen0130.jpg"
+           alt="Madsen Properties team"
+           class="about-main-img"
+           onerror="this.style.display='none'" />
+
+      <!-- Section header -->
+      <div style="margin-bottom:32px;">
+        <div class="section-label">Our People</div>
+        <h2 class="section-title">The Madsen Properties Team</h2>
+        <p class="section-sub">A dedicated group of professionals committed to making property management seamless for owners and residents alike.</p>
+      </div>
+
+      <!-- Team grid -->
+      <div class="team-grid">
+
+        <!-- Alicia Madsen -->
+        <div class="team-card">
+          <img src="https://madsenpropertymgmt.com/public/uploads/Madsen0431.jpg"
+               alt="Alicia Madsen" class="team-photo"
+               onerror="this.style.background='#f3f3f3';this.style.minHeight='260px'" />
+          <div class="team-info">
+            <div class="team-name">Alicia Madsen</div>
+            <div class="team-title">Owner &amp; Licensed Broker — CalBRE #01912310</div>
+            <div class="team-bio">
+              Alicia graduated in 2005 from CSU, Chico with a BS in Business Administration, minor in Agricultural Business with an option in marketing. After purchasing her first investment property in 2009, she fell in love with real estate.
+              <br><br>
+              She has years of experience managing single family residences, apartments, town homes and duplexes in Butte County. In her free time, Alicia loves spending time outdoors, gardening, hiking, kayaking, and fishing with her husband and daughters.
+            </div>
+            <div class="team-quote">"If you change the way you look at things, the things you look at will change." — Unknown</div>
+          </div>
+        </div>
+
+        <!-- Kurstie Miccio -->
+        <div class="team-card">
+          <img src="https://madsenpropertymgmt.com/public/uploads/Madsen0147NEW.jpg"
+               alt="Kurstie Miccio" class="team-photo"
+               onerror="this.style.background='#f3f3f3';this.style.minHeight='260px'" />
+          <div class="team-info">
+            <div class="team-name">Kurstie Miccio</div>
+            <div class="team-title">Property Manager</div>
+            <div class="team-bio">
+              Kurstie, with her signature bold glasses and colorful hairstyles, is always looking for ways to grow and challenge herself. She has built a career in property management, leveraging her keen eye for detail and love of helping others.
+              <br><br>
+              Now pursuing her real estate license, Kurstie is eager to take her skills to the next level. As a busy mother of two, she still makes time for her nerdy hobbies — proving that passion and care make the best managers.
+            </div>
+          </div>
+        </div>
+
+        <!-- Lyndsey Romac -->
+        <div class="team-card">
+          <img src="https://madsenpropertymgmt.com/public/uploads/Head_Shot-_Woman_in_Black.jpg"
+               alt="Lyndsey Romac" class="team-photo"
+               onerror="this.style.background='#f3f3f3';this.style.minHeight='260px'" />
+          <div class="team-info">
+            <div class="team-name">Lyndsey Romac</div>
+            <div class="team-title">Team Member</div>
+            <div class="team-bio team-bio-soon">Bio coming soon…</div>
+          </div>
+        </div>
+
+        <!-- Karen Allen -->
+        <div class="team-card">
+          <img src="https://madsenpropertymgmt.com/public/uploads/Head_Shot-_Woman_in_Black.jpg"
+               alt="Karen Allen" class="team-photo"
+               onerror="this.style.background='#f3f3f3';this.style.minHeight='260px'" />
+          <div class="team-info">
+            <div class="team-name">Karen Allen</div>
+            <div class="team-title">Team Member</div>
+            <div class="team-bio team-bio-soon">Bio coming soon…</div>
+          </div>
+        </div>
+
+      </div><!-- /team-grid -->
+
+      <!-- Awards -->
+      <div class="awards-strip">
+        <img src="https://madsenpropertymgmt.com/public/uploads/BOC_22_first_place.RGB_.jpg" alt="Best of Chico 2022" />
+        <img src="https://madsenpropertymgmt.com/public/uploads/BOC-2023-theme-logo.png" alt="Best of Chico 2023" />
+      </div>
+
+    </div>
+  </section>
+
+  <!-- VALUES -->
+  <div class="values-section">
+    <div class="container">
+      <div class="section-label">What Drives Us</div>
+      <h2 class="section-title">Our Values</h2>
+      <div class="values-grid">
+        <div class="value-card">
+          <div class="value-icon">🤝</div>
+          <div class="value-title">Trust &amp; Transparency</div>
+          <div class="value-desc">We believe owners and tenants deserve honest communication and clear expectations at every step.</div>
+        </div>
+        <div class="value-card">
+          <div class="value-icon">🏆</div>
+          <div class="value-title">Award-Winning Service</div>
+          <div class="value-desc">Voted CN&R Best Property Management in Chico two years running — we hold ourselves to the highest standard.</div>
+        </div>
+        <div class="value-card">
+          <div class="value-icon">📍</div>
+          <div class="value-title">Local Expertise</div>
+          <div class="value-desc">Deep roots in Butte County mean we know the neighborhoods, the market, and the community.</div>
+        </div>
+        <div class="value-card">
+          <div class="value-icon">💛</div>
+          <div class="value-title">People First</div>
+          <div class="value-desc">From residents to property owners, every relationship matters. We treat your home like our own.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONNECT -->
+  <div class="connect-section">
+    <div class="container">
+      <div class="section-label">Stay Connected</div>
+      <h2 class="section-title">Connect With Us</h2>
+      <p class="section-sub" style="margin:0 auto;text-align:center;">Follow us for updates, new listings, and community news.</p>
+      <div class="social-links">
+        <a href="https://www.facebook.com/MadsenProperties" target="_blank" rel="noopener" class="social-btn">
+          <img src="https://madsenpropertymgmt.com/assets/images/facebook-55.png" alt="" style="height:20px;width:auto;" onerror="this.style.display='none'" />
+          Facebook
+        </a>
+        <a href="https://www.instagram.com/madsenproperties" target="_blank" rel="noopener" class="social-btn">
+          <img src="https://madsenpropertymgmt.com/assets/images/instagram-55.png" alt="" style="height:20px;width:auto;" onerror="this.style.display='none'" />
+          Instagram
+        </a>
+        <a href="mailto:info@madsenpropertymgmt.com" class="social-btn">
+          <img src="https://madsenpropertymgmt.com/assets/images/envelope-55.png" alt="" style="height:20px;width:auto;" onerror="this.style.display='none'" />
+          Email Us
+        </a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="https://madsenpropertymgmt.com/public/uploads/logo.png" alt="Madsen Properties" />
+        <p>Award-winning property management serving Northern California. Voted CN&amp;R Best Property Management 2022 &amp; 2023.</p>
+      </div>
+      <div>
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="index.html#rentals">Rentals</a></li>
+          <li><a href="https://madsenpropertymgmt.com/apply/" target="_blank">Apply Now</a></li>
+          <li><a href="resident-benefits.html">Resident Benefits</a></li>
+          <li><a href="index.html#contact">Contact Us</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Portals</h4>
+        <ul>
+          <li><a href="https://madsenpropertieschico.managebuilding.com/Resident/PublicPages/Home.aspx" target="_blank">Tenant Sign-In</a></li>
+          <li><a href="https://madsenpropertieschico.managebuilding.com/Manager/PublicPages/Login.aspx" target="_blank">Owner Login</a></li>
+          <li><a href="https://madsenpropertymgmt.com/apply/" target="_blank">Online Application</a></li>
+        </ul>
+        <h4 style="margin-top:18px;">Service Area</h4>
+        <p style="font-size:13px;color:#999;font-weight:300;line-height:20px;">Chico · Paradise · Magalia<br>Oroville · Hamilton City</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Madsen Properties. All rights reserved.</p>
+      <p>Serving Northern California</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+const hamburger = document.getElementById('hamburger');
+const navList   = document.getElementById('navList');
+hamburger.addEventListener('click', () => {
+  const open = navList.classList.toggle('open');
+  hamburger.classList.toggle('open', open);
+  hamburger.setAttribute('aria-expanded', String(open));
+});
+document.addEventListener('click', e => {
+  if (!hamburger.contains(e.target) && !navList.contains(e.target)) {
+    navList.classList.remove('open');
+    hamburger.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+  }
+});
+const btt = document.getElementById('backToTop');
+window.addEventListener('scroll', () => btt.classList.toggle('visible', window.scrollY > 400));
+</script>
+</body>
+</html>
