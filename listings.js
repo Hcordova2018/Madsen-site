@@ -339,6 +339,27 @@ const listingsData = [
     tag: 'oroville',
   },
 
+  // ── LISTING 13 ─────────────────────────────────────────────────
+  {
+    id: 13,
+    address:     '1826 Edgewood Dr',
+    city:        'Lodi, California 95240',
+    price:       '$2,500/mo',
+    priceNum:    2500,
+    beds:        3,
+    baths:       2,
+    status:      'available',
+    statusLabel: 'Available Now',
+    available:   'July 01, 2026',
+    availDate:   '2026-07-01',
+    yearBuilt:   1968,
+    desc: 'Spacious 3-bed/2-bath single family home in Lodi. 1,979 sq ft with an open floor plan, central A/C, attached garage, and a large backyard. Quiet neighborhood, close to schools and shopping.',
+    images: [
+      'https://raw.githubusercontent.com/Hcordova2018/Madsen-site/main/images/re-test-2-1778716530648.png',
+    ],
+    tag: 'lodi',
+  },
+
   // ── ADD NEW LISTINGS ABOVE THIS LINE ───────────────────────────
   // Copy any listing block above, paste it here, and increment the id number.
 
