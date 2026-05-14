@@ -268,8 +268,8 @@
     <!-- GitHub push bar -->
     <div class="push-bar">
       <div>
-        <div class="push-bar-info"><strong>Changes are saved locally.</strong> When you're ready, push to GitHub to publish to the live site.</div>
-        <div class="push-status" id="pushStatus">No unpublished changes.</div>
+        <div class="push-bar-info" id="pushBarInfo"><strong>All changes are live.</strong> Edit any listing, then click Publish to update the website.</div>
+        <div class="push-status" id="pushStatus"></div>
       </div>
       <button class="btn-push" onclick="pushToGitHub()">🚀 Publish to Live Site</button>
     </div>
@@ -687,7 +687,8 @@ function saveListing() {
   }
 
   hasChanges = true;
-  document.getElementById('pushStatus').textContent = '⚠️ Unpublished changes — click "Publish to Live Site" to go live.';
+  document.getElementById('pushBarInfo').innerHTML = '<strong style="color:#d97706;">⚠️ Unpublished changes.</strong> Click Publish to update the live site.';
+  document.getElementById('pushStatus').textContent = '';
   closeModal();
   renderTable();
   showToast('✓ Listing saved', 'success');
@@ -707,7 +708,8 @@ function closeConfirm() {
 function confirmDelete() {
   workingListings = workingListings.filter(l => l.id !== deleteTargetId);
   hasChanges = true;
-  document.getElementById('pushStatus').textContent = '⚠️ Unpublished changes — click "Publish to Live Site" to go live.';
+  document.getElementById('pushBarInfo').innerHTML = '<strong style="color:#d97706;">⚠️ Unpublished changes.</strong> Click Publish to update the live site.';
+  document.getElementById('pushStatus').textContent = '';
   closeConfirm();
   renderTable();
   showToast('Listing deleted', 'success');
@@ -740,7 +742,8 @@ async function pushToGitHub() {
 
     if (pushResp.ok) {
       hasChanges = false;
-      document.getElementById('pushStatus').textContent = '✅ Published! Live site will update in ~30 seconds.';
+      document.getElementById('pushBarInfo').innerHTML = '<strong>All changes are live.</strong> Edit any listing, then click Publish to update the website.';
+      document.getElementById('pushStatus').textContent = '✅ Published successfully — live in ~30 seconds.';
       showToast('✅ Live site updated!', 'success');
     } else {
       throw new Error('GitHub push failed');
