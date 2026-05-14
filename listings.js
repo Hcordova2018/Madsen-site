@@ -13,7 +13,7 @@ function getUploads(id) {
 const listingsData = [
   {
     id:          1,
-    address:     '112000 Esplanade #15',
+    address:     '112 Esplanade #15',
     city:        'Chico, California 95926',
     price:       '$1,250/mo',
     priceNum:    1250,
