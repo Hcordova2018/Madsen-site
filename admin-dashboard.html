@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard | Madsen Properties</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Martel:wght@700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Roboto', sans-serif; background: #f3f4f6; color: #333; line-height: 1.6; }
+
+    /* ── LOGIN SCREEN ── */
+    .login-screen {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, #1a1a1a 0%, #2d1a0e 100%);
+    }
+    .login-card {
+      background: #fff; border-radius: 16px; padding: 44px 40px; width: 100%; max-width: 380px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.3);
+    }
+    .login-logo { text-align: center; margin-bottom: 28px; }
+    .login-logo img { height: 72px; }
+    .login-title { font-family: 'Martel', serif; font-size: 1.3rem; color: #ab4000; text-align: center; margin-bottom: 6px; }
+    .login-sub { font-size: 13px; color: #999; text-align: center; margin-bottom: 28px; font-weight: 300; }
+    .login-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 16px; }
+    .login-group label { font-size: 12px; font-weight: 700; color: #6f6f6f; text-transform: uppercase; letter-spacing: .04em; }
+    .login-group input {
+      padding: 10px 14px; border: 1px solid #ddd; border-radius: 6px;
+      font-size: 15px; font-family: 'Roboto', sans-serif;
+      transition: border-color .18s, box-shadow .18s;
+    }
+    .login-group input:focus { outline: none; border-color: #bc5d1f; box-shadow: 0 0 0 3px rgba(188,93,31,.1); }
+    .btn-login {
+      width: 100%; background: #bc5d1f; color: #fff; border: none;
+      padding: 12px; border-radius: 6px; font-family: 'Martel', serif; font-weight: 700;
+      font-size: 15px; cursor: pointer; transition: background .18s; margin-top: 4px;
+    }
+    .btn-login:hover { background: #ab4000; }
+    .login-error { color: #dc2626; font-size: 13px; text-align: center; margin-top: 10px; display: none; }
+
+    /* ── DASHBOARD LAYOUT ── */
+    .dashboard { display: none; min-height: 100vh; }
+
+    /* Top bar */
+    .dash-topbar {
+      background: #fff; border-bottom: 1px solid #e5e5e5;
+      padding: 0 28px; height: 60px; display: flex; align-items: center;
+      justify-content: space-between; position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 1px 4px rgba(0,0,0,.06);
+    }
+    .dash-logo { display: flex; align-items: center; gap: 10px; }
+    .dash-logo img { height: 40px; }
+    .dash-logo span { font-family: 'Martel', serif; font-size: 14px; color: #ab4000; font-weight: 700; }
+    .dash-user { display: flex; align-items: center; gap: 12px; font-size: 13px; color: #6f6f6f; }
+    .btn-logout {
+      background: #f3f4f6; border: 1px solid #e5e5e5; border-radius: 6px;
+      padding: 6px 14px; font-size: 13px; cursor: pointer; color: #6f6f6f;
+      font-family: 'Roboto', sans-serif; transition: all .18s;
+    }
+    .btn-logout:hover { background: #fee2e2; color: #dc2626; border-color: #fca5a5; }
+
+    /* Main area */
+    .dash-main { padding: 28px; max-width: 1100px; margin: 0 auto; }
+
+    /* Stats bar */
+    .stats-bar { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-bottom: 28px; }
+    .stat-card { background: #fff; border-radius: 10px; padding: 18px 20px; border: 1px solid #e5e5e5; }
+    .stat-card .num { font-size: 1.8rem; font-weight: 700; color: #ab4000; line-height: 1; }
+    .stat-card .lbl { font-size: 12px; color: #999; font-weight: 300; margin-top: 4px; text-transform: uppercase; letter-spacing: .05em; }
+
+    /* Section header */
+    .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+    .section-header h2 { font-family: 'Martel', serif; font-size: 1.1rem; color: #333; }
+    .btn-add {
+      background: #bc5d1f; color: #fff; border: none; padding: 9px 18px;
+      border-radius: 6px; font-family: 'Martel', serif; font-weight: 700; font-size: 13px;
+      cursor: pointer; transition: background .18s; display: flex; align-items: center; gap: 6px;
+    }
+    .btn-add:hover { background: #ab4000; }
+
+    /* Listing table */
+    .listings-table { background: #fff; border-radius: 12px; border: 1px solid #e5e5e5; overflow: hidden; }
+    .table-header {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr 120px;
+      padding: 11px 16px; background: #f9f9f9; border-bottom: 1px solid #e5e5e5;
+      font-size: 11px; font-weight: 700; color: #999; text-transform: uppercase; letter-spacing: .05em;
+    }
+    .table-row {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr 120px;
+      padding: 14px 16px; border-bottom: 1px solid #f3f3f3; align-items: center;
+      transition: background .15s;
+    }
+    .table-row:last-child { border-bottom: none; }
+    .table-row:hover { background: #fdfcfb; }
+    .table-row .address { font-weight: 700; font-size: 14px; color: #333; }
+    .table-row .city-tag { font-size: 12px; color: #999; font-weight: 300; margin-top: 2px; }
+    .table-row .price { font-weight: 700; color: #ab4000; font-size: 14px; }
+    .table-row .beds { font-size: 13px; color: #6f6f6f; font-weight: 300; }
+    .status-pill {
+      display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .05em; padding: 3px 9px; border-radius: 20px;
+    }
+    .pill-available { background: #dcfce7; color: #16a34a; }
+    .pill-soon { background: #fef3c7; color: #d97706; }
+    .pill-approved { background: #f3f4f6; color: #6b7280; }
+    .row-actions { display: flex; gap: 6px; }
+    .btn-edit, .btn-delete {
+      border: none; border-radius: 5px; padding: 5px 12px; font-size: 12px;
+      font-family: 'Roboto', sans-serif; font-weight: 700; cursor: pointer; transition: all .18s;
+    }
+    .btn-edit { background: #f3f4f6; color: #333; }
+    .btn-edit:hover { background: #e5e7eb; }
+    .btn-delete { background: #fee2e2; color: #dc2626; }
+    .btn-delete:hover { background: #fca5a5; }
+
+    /* ── EDIT MODAL ── */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5);
+      z-index: 1000; align-items: center; justify-content: center; padding: 20px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: #fff; border-radius: 16px; width: 100%; max-width: 680px;
+      max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,.2);
+    }
+    .modal-header {
+      padding: 20px 24px; border-bottom: 1px solid #e5e5e5;
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; background: #fff; z-index: 2;
+    }
+    .modal-header h3 { font-family: 'Martel', serif; font-size: 1.1rem; color: #ab4000; }
+    .modal-close { background: none; border: none; font-size: 1.4rem; cursor: pointer; color: #999; }
+    .modal-close:hover { color: #333; }
+    .modal-body { padding: 24px; }
+    .modal-footer {
+      padding: 16px 24px; border-top: 1px solid #e5e5e5;
+      display: flex; justify-content: flex-end; gap: 10px;
+      position: sticky; bottom: 0; background: #fff;
+    }
+
+    /* Form fields */
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .form-group { display: flex; flex-direction: column; gap: 5px; }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-group label { font-size: 11px; font-weight: 700; color: #6f6f6f; text-transform: uppercase; letter-spacing: .04em; }
+    .form-group input, .form-group select, .form-group textarea {
+      padding: 9px 12px; border: 1px solid #ddd; border-radius: 6px;
+      font-size: 14px; font-family: 'Roboto', sans-serif; color: #333;
+      transition: border-color .18s, box-shadow .18s; background: #fff;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      outline: none; border-color: #bc5d1f; box-shadow: 0 0 0 3px rgba(188,93,31,.1);
+    }
+    .form-group textarea { resize: vertical; min-height: 80px; }
+    .form-section-title { font-family: 'Martel', serif; font-size: 13px; color: #ab4000; font-weight: 700; margin: 18px 0 8px; }
+
+    /* Image URL list */
+    .img-url-list { display: flex; flex-direction: column; gap: 8px; }
+    .img-url-row { display: flex; gap: 6px; align-items: center; background: #f9f9f9; border-radius: 8px; padding: 6px 8px; border: 1px solid #eee; }
+    .img-url-row .thumb { width: 44px; height: 33px; object-fit: cover; border-radius: 4px; background: #e5e7eb; flex-shrink: 0; }
+    .img-url-row input { flex: 1; border: none; background: transparent; font-size: 13px; color: #555; padding: 4px 6px; outline: none; }
+    .img-url-row input:focus { background: #fff; border-radius: 4px; }
+    .btn-remove-img { background: #fee2e2; color: #dc2626; border: none; border-radius: 4px; padding: 5px 9px; cursor: pointer; font-size: 12px; flex-shrink: 0; }
+    .btn-remove-img:hover { background: #fca5a5; }
+    .img-add-row { display: flex; gap: 8px; margin-top: 8px; }
+    .btn-add-img-url { flex: 1; background: #f3f4f6; border: 1px dashed #ccc; color: #6f6f6f; border-radius: 6px; padding: 9px; cursor: pointer; font-size: 13px; transition: all .18s; font-family: 'Roboto', sans-serif; }
+    .btn-add-img-url:hover { background: #fdf3ec; border-color: #bc5d1f; color: #bc5d1f; }
+    .btn-upload-img { flex: 1; background: #bc5d1f; color: #fff; border: none; border-radius: 6px; padding: 9px; cursor: pointer; font-size: 13px; font-family: 'Martel', serif; font-weight: 700; transition: background .18s; display: flex; align-items: center; justify-content: center; gap: 6px; }
+    .btn-upload-img:hover { background: #ab4000; }
+    .upload-progress { font-size: 12px; color: #bc5d1f; padding: 4px 0; display: none; }
+    input[type="file"]#imgFileInput { display: none; }
+
+    /* Action buttons */
+    .btn-cancel { background: #f3f4f6; border: 1px solid #e5e5e5; border-radius: 6px; padding: 9px 20px; font-size: 13px; cursor: pointer; color: #6f6f6f; font-family: 'Roboto', sans-serif; }
+    .btn-cancel:hover { background: #e5e7eb; }
+    .btn-save { background: #bc5d1f; color: #fff; border: none; border-radius: 6px; padding: 9px 20px; font-family: 'Martel', serif; font-weight: 700; font-size: 13px; cursor: pointer; transition: background .18s; }
+    .btn-save:hover { background: #ab4000; }
+
+    /* Toast */
+    .toast {
+      position: fixed; bottom: 24px; right: 24px; background: #1a1a1a; color: #fff;
+      padding: 12px 20px; border-radius: 8px; font-size: 14px; font-weight: 500;
+      z-index: 9999; transform: translateY(80px); opacity: 0; transition: all .3s;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast.success { background: #16a34a; }
+    .toast.error { background: #dc2626; }
+
+    /* Delete confirm */
+    .confirm-overlay {
+      display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5);
+      z-index: 2000; align-items: center; justify-content: center;
+    }
+    .confirm-overlay.open { display: flex; }
+    .confirm-card { background: #fff; border-radius: 12px; padding: 28px; max-width: 360px; width: 100%; text-align: center; }
+    .confirm-card h4 { font-family: 'Martel', serif; font-size: 1.1rem; margin-bottom: 8px; }
+    .confirm-card p { font-size: 14px; color: #6f6f6f; font-weight: 300; margin-bottom: 20px; }
+    .confirm-actions { display: flex; gap: 10px; justify-content: center; }
+    .btn-confirm-delete { background: #dc2626; color: #fff; border: none; border-radius: 6px; padding: 9px 20px; font-weight: 700; cursor: pointer; font-size: 13px; }
+    .btn-confirm-delete:hover { background: #b91c1c; }
+
+    /* GitHub push section */
+    .push-bar {
+      background: #fff; border: 1px solid #e5e5e5; border-radius: 12px;
+      padding: 16px 20px; margin-bottom: 20px; display: flex;
+      align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    }
+    .push-bar-info { font-size: 13px; color: #6f6f6f; font-weight: 300; }
+    .push-bar-info strong { color: #333; }
+    .btn-push { background: #1a1a1a; color: #fff; border: none; border-radius: 6px; padding: 9px 18px; font-family: 'Martel', serif; font-weight: 700; font-size: 13px; cursor: pointer; transition: background .18s; }
+    .btn-push:hover { background: #333; }
+    .push-status { font-size: 12px; color: #999; }
+
+    @media (max-width: 700px) {
+      .stats-bar { grid-template-columns: 1fr 1fr; }
+      .table-header, .table-row { grid-template-columns: 1fr 1fr; }
+      .table-header > *:nth-child(n+3), .table-row > *:nth-child(n+3) { display: none; }
+      .form-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── LOGIN ── -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-card">
+    <div class="login-logo">
+      <img src="https://madsenpropertymgmt.com/public/uploads/logo.png" alt="Madsen Properties" onerror="this.style.display='none'" />
+    </div>
+    <div class="login-title">Admin Dashboard</div>
+    <div class="login-sub">Madsen Properties — Staff Only</div>
+    <div class="login-group">
+      <label>Username</label>
+      <input type="text" id="loginUser" placeholder="admin" autocomplete="username" />
+    </div>
+    <div class="login-group">
+      <label>Password</label>
+      <input type="password" id="loginPass" placeholder="••••••••" autocomplete="current-password"
+        onkeydown="if(event.key==='Enter') doLogin()" />
+    </div>
+    <button class="btn-login" onclick="doLogin()">Sign In</button>
+    <div class="login-error" id="loginError">Incorrect username or password.</div>
+  </div>
+</div>
+
+<!-- ── DASHBOARD ── -->
+<div class="dashboard" id="dashboard">
+
+  <!-- Top bar -->
+  <div class="dash-topbar">
+    <div class="dash-logo">
+      <img src="https://madsenpropertymgmt.com/public/uploads/logo.png" alt="" onerror="this.style.display='none'" />
+      <span>Admin Dashboard</span>
+    </div>
+    <div class="dash-user">
+      <span id="dashUserName">Admin</span>
+      <button class="btn-logout" onclick="doLogout()">Sign Out</button>
+    </div>
+  </div>
+
+  <div class="dash-main">
+
+    <!-- Stats -->
+    <div class="stats-bar" id="statsBar"></div>
+
+    <!-- GitHub push bar -->
+    <div class="push-bar">
+      <div>
+        <div class="push-bar-info"><strong>Changes are saved locally.</strong> When you're ready, push to GitHub to publish to the live site.</div>
+        <div class="push-status" id="pushStatus">No unpublished changes.</div>
+      </div>
+      <button class="btn-push" onclick="pushToGitHub()">🚀 Publish to Live Site</button>
+    </div>
+
+    <!-- Listings -->
+    <div class="section-header">
+      <h2>Rental Listings</h2>
+      <button class="btn-add" onclick="openModal(null)">+ Add New Listing</button>
+    </div>
+
+    <div class="listings-table">
+      <div class="table-header">
+        <span>Property</span>
+        <span>Price</span>
+        <span>Beds / Baths</span>
+        <span>Available</span>
+        <span>Status</span>
+        <span>Actions</span>
+      </div>
+      <div id="listingsTableBody"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── EDIT MODAL ── -->
+<div class="modal-overlay" id="editModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modalTitle">Edit Listing</h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="editId" />
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Address</label>
+          <input id="editAddress" type="text" placeholder="123 Main St #1" />
+        </div>
+        <div class="form-group">
+          <label>City</label>
+          <input id="editCity" type="text" placeholder="Chico, California 95926" />
+        </div>
+        <div class="form-group">
+          <label>Price (display)</label>
+          <input id="editPrice" type="text" placeholder="$1,250/mo" />
+        </div>
+        <div class="form-group">
+          <label>Price (number only)</label>
+          <input id="editPriceNum" type="number" placeholder="1250" />
+        </div>
+        <div class="form-group">
+          <label>Bedrooms (0 = Studio)</label>
+          <input id="editBeds" type="number" min="0" placeholder="2" />
+        </div>
+        <div class="form-group">
+          <label>Bathrooms</label>
+          <input id="editBaths" type="number" step="0.5" min="0" placeholder="1" />
+        </div>
+        <div class="form-group">
+          <label>Status</label>
+          <select id="editStatus">
+            <option value="available">Available Now</option>
+            <option value="soon">Coming Soon</option>
+            <option value="approved">Approved Applicant</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>City Tag (filter)</label>
+          <select id="editTag">
+            <option value="chico">Chico</option>
+            <option value="oroville">Oroville</option>
+            <option value="paradise">Paradise</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Available Date (display)</label>
+          <input id="editAvailable" type="text" placeholder="July 01, 2026" />
+        </div>
+        <div class="form-group">
+          <label>Available Date (YYYY-MM-DD)</label>
+          <input id="editAvailDate" type="date" />
+        </div>
+        <div class="form-group">
+          <label>Year Built (leave blank if unknown)</label>
+          <input id="editYearBuilt" type="number" placeholder="1990" />
+        </div>
+        <div class="form-group full">
+          <label>Description</label>
+          <textarea id="editDesc" placeholder="Describe the property…"></textarea>
+        </div>
+      </div>
+
+      <div class="form-section-title">📸 Photos</div>
+      <div class="img-url-list" id="imgUrlList"></div>
+      <div class="img-add-row">
+        <button class="btn-add-img-url" onclick="addImgRow('')">+ Paste URL</button>
+        <button class="btn-upload-img" onclick="document.getElementById('imgFileInput').click()">
+          ⬆ Upload from Computer
+        </button>
+      </div>
+      <input type="file" id="imgFileInput" accept="image/*" multiple onchange="handleImgUpload(this)" />
+      <div class="upload-progress" id="uploadProgress"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-save" onclick="saveListing()">Save Listing</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── DELETE CONFIRM ── -->
+<div class="confirm-overlay" id="confirmOverlay">
+  <div class="confirm-card">
+    <h4>Delete Listing?</h4>
+    <p id="confirmMsg">This will remove the listing permanently.</p>
+    <div class="confirm-actions">
+      <button class="btn-cancel" onclick="closeConfirm()">Cancel</button>
+      <button class="btn-confirm-delete" onclick="confirmDelete()">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── TOAST ── -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ── CONFIG ──────────────────────────────────────────────────────
+// Change this password to something only Alicia knows
+const ADMIN_PASSWORD = 'madsen2026';
+const ADMIN_USERNAME = 'admin';
+
+// GitHub config for publishing
+const GITHUB_TOKEN = 'GITHUB_TOKEN_PLACEHOLDER';
+const GITHUB_OWNER = 'Hcordova2018';
+const GITHUB_REPO  = 'Madsen-site';
+// ────────────────────────────────────────────────────────────────
+
+// Working copy of listings — loaded after login
+let workingListings = [];
+let hasChanges = false;
+let deleteTargetId = null;
+
+// ── AUTH ──────────────────────────────────────────────────────────
+function doLogin() {
+  const u = document.getElementById('loginUser').value.trim();
+  const p = document.getElementById('loginPass').value;
+  if (u === ADMIN_USERNAME && p === ADMIN_PASSWORD) {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    document.getElementById('dashUserName').textContent = 'Alicia';
+    loadListings();
+  } else {
+    document.getElementById('loginError').style.display = 'block';
+    document.getElementById('loginPass').value = '';
+  }
+}
+
+function loadListings() {
+  // Try to load from listings.js via dynamic script tag
+  if (typeof listingsData !== 'undefined') {
+    workingListings = listingsData.map(l => ({...l, images: [...(l.images || [])]}));
+    renderStats();
+    renderTable();
+    return;
+  }
+  // Load listings.js dynamically
+  const script = document.createElement('script');
+  script.src = 'listings.js';
+  script.onload = () => {
+    workingListings = (typeof listingsData !== 'undefined')
+      ? listingsData.map(l => ({...l, images: [...(l.images || [])]}))
+      : [];
+    renderStats();
+    renderTable();
+  };
+  script.onerror = () => {
+    // listings.js blocked (file:// CORS) — start with empty list
+    workingListings = [];
+    renderStats();
+    renderTable();
+    showToast('⚠️ Could not load listings.js — use localhost:8080 for full editing', 'error');
+  };
+  document.head.appendChild(script);
+}
+
+function doLogout() {
+  if (hasChanges && !confirm('You have unsaved changes. Sign out anyway?')) return;
+  document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('dashboard').style.display = 'none';
+  document.getElementById('loginPass').value = '';
+  document.getElementById('loginUser').value = '';
+}
+
+// ── STATS ──────────────────────────────────────────────────────────
+function renderStats() {
+  const total     = workingListings.length;
+  const available = workingListings.filter(l => l.status === 'available').length;
+  const soon      = workingListings.filter(l => l.status === 'soon').length;
+  const approved  = workingListings.filter(l => l.status === 'approved').length;
+  document.getElementById('statsBar').innerHTML = `
+    <div class="stat-card"><div class="num">${total}</div><div class="lbl">Total Listings</div></div>
+    <div class="stat-card"><div class="num" style="color:#16a34a">${available}</div><div class="lbl">Available Now</div></div>
+    <div class="stat-card"><div class="num" style="color:#d97706">${soon}</div><div class="lbl">Coming Soon</div></div>
+    <div class="stat-card"><div class="num" style="color:#6b7280">${approved}</div><div class="lbl">Approved</div></div>
+  `;
+}
+
+// ── TABLE ──────────────────────────────────────────────────────────
+function pillClass(s) {
+  return s === 'available' ? 'pill-available' : s === 'soon' ? 'pill-soon' : 'pill-approved';
+}
+function pillLabel(s) {
+  return s === 'available' ? 'Available Now' : s === 'soon' ? 'Coming Soon' : 'Approved';
+}
+function bedLabel(b) {
+  return b === 0 ? 'Studio' : b + ' Bed' + (b > 1 ? 's' : '');
+}
+
+function renderTable() {
+  const body = document.getElementById('listingsTableBody');
+  if (workingListings.length === 0) {
+    body.innerHTML = `<div style="padding:32px;text-align:center;color:#bbb;font-size:14px;">No listings yet. Click "Add New Listing" to get started.</div>`;
+    return;
+  }
+  body.innerHTML = workingListings.map(l => `
+    <div class="table-row">
+      <div>
+        <div class="address">${l.address}</div>
+        <div class="city-tag">${l.city}</div>
+      </div>
+      <div class="price">${l.price}</div>
+      <div class="beds">${bedLabel(l.beds)} · ${l.baths} Bath</div>
+      <div style="font-size:13px;color:#6f6f6f;font-weight:300;">${l.available}</div>
+      <div><span class="status-pill ${pillClass(l.status)}">${pillLabel(l.status)}</span></div>
+      <div class="row-actions">
+        <button class="btn-edit" onclick="openModal(${l.id})">Edit</button>
+        <button class="btn-delete" onclick="openConfirm(${l.id})">Delete</button>
+      </div>
+    </div>
+  `).join('');
+  renderStats();
+}
+
+// ── MODAL ──────────────────────────────────────────────────────────
+function openModal(id) {
+  const l = id ? workingListings.find(x => x.id === id) : null;
+  document.getElementById('modalTitle').textContent = l ? `Edit: ${l.address}` : 'Add New Listing';
+  document.getElementById('editId').value = l ? l.id : '';
+  document.getElementById('editAddress').value   = l?.address || '';
+  document.getElementById('editCity').value       = l?.city || 'Chico, California 95926';
+  document.getElementById('editPrice').value      = l?.price || '';
+  document.getElementById('editPriceNum').value   = l?.priceNum || '';
+  document.getElementById('editBeds').value       = l?.beds ?? '';
+  document.getElementById('editBaths').value      = l?.baths ?? '';
+  document.getElementById('editStatus').value     = l?.status || 'available';
+  document.getElementById('editTag').value        = l?.tag || 'chico';
+  document.getElementById('editAvailable').value  = l?.available || '';
+  document.getElementById('editAvailDate').value  = l?.availDate || '';
+  document.getElementById('editYearBuilt').value  = l?.yearBuilt || '';
+  document.getElementById('editDesc').value       = l?.desc || '';
+
+  // Images
+  const imgs = l?.images || [''];
+  document.getElementById('imgUrlList').innerHTML = '';
+  imgs.forEach(src => addImgRow(src));
+
+  document.getElementById('editModal').classList.add('open');
+  document.getElementById('editAddress').focus();
+}
+
+function closeModal() {
+  document.getElementById('editModal').classList.remove('open');
+}
+
+function addImgRow(src) {
+  const row = document.createElement('div');
+  row.className = 'img-url-row';
+  const thumbSrc = src || '';
+  row.innerHTML = `
+    <img class="thumb" src="${thumbSrc}" onerror="this.style.opacity='.2'" style="opacity:${src ? '1' : '.2'}" alt="" />
+    <input type="text" value="${src}" placeholder="https://…photo.jpg"
+      oninput="this.previousElementSibling.src=this.value" />
+    <button class="btn-remove-img" onclick="this.parentElement.remove()">✕</button>
+  `;
+  document.getElementById('imgUrlList').appendChild(row);
+}
+
+// ── UPLOAD IMAGES FROM COMPUTER ──────────────────────────────────
+async function handleImgUpload(input) {
+  const files = Array.from(input.files);
+  if (!files.length) return;
+
+  const progress = document.getElementById('uploadProgress');
+  progress.style.display = 'block';
+  progress.textContent = `Uploading ${files.length} photo${files.length > 1 ? 's' : ''}…`;
+
+  let uploaded = 0;
+  let failed = 0;
+
+  for (const file of files) {
+    try {
+      const url = await uploadImageToGitHub(file);
+      if (url) {
+        addImgRow(url);
+        uploaded++;
+        progress.textContent = `Uploaded ${uploaded}/${files.length}…`;
+      } else {
+        failed++;
+      }
+    } catch(e) {
+      failed++;
+    }
+  }
+
+  progress.style.display = 'none';
+  input.value = ''; // reset file input
+
+  if (failed > 0) {
+    showToast(`⚠️ ${uploaded} uploaded, ${failed} failed`, 'error');
+  } else {
+    showToast(`✅ ${uploaded} photo${uploaded > 1 ? 's' : ''} uploaded!`, 'success');
+  }
+}
+
+async function uploadImageToGitHub(file) {
+  // Convert file to base64
+  const base64 = await new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload  = () => resolve(reader.result.split(',')[1]);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+
+  // Create unique filename
+  const ext = file.name.split('.').pop().toLowerCase().replace('jpeg', 'jpg');
+  const unique = Math.random().toString(36).substring(2, 8);
+  const safeBase = file.name.replace(/\.[^.]+$/, '').replace(/[^a-zA-Z0-9]/g, '-').toLowerCase().substring(0, 30);
+  const filename = `images/${safeBase}-${unique}.${ext}`;
+
+  // Check if file already exists (to get SHA for update)
+  let sha = null;
+  const checkResp = await fetch(
+    `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${filename}`,
+    { headers: { 'Authorization': 'token ' + GITHUB_TOKEN } }
+  );
+  if (checkResp.ok) {
+    sha = (await checkResp.json()).sha;
+  }
+
+  // Push to GitHub
+  const payload = { message: `Upload image: ${filename}`, content: base64 };
+  if (sha) payload.sha = sha;
+
+  const pushResp = await fetch(
+    `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${filename}`,
+    {
+      method: 'PUT',
+      headers: { 'Authorization': 'token ' + GITHUB_TOKEN, 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    }
+  );
+
+  if (!pushResp.ok) throw new Error('Upload failed');
+
+  // Return the raw GitHub URL
+  return `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/main/${filename}`;
+}
+
+function saveListing() {
+  const id     = document.getElementById('editId').value;
+  const address = document.getElementById('editAddress').value.trim();
+  if (!address) { showToast('Address is required', 'error'); return; }
+
+  const statusVal = document.getElementById('editStatus').value;
+  const statusLabels = { available: 'Available Now', soon: 'Coming Soon', approved: 'Approved Applicant' };
+
+  // Collect image URLs
+  const images = Array.from(document.querySelectorAll('#imgUrlList input'))
+    .map(i => i.value.trim()).filter(Boolean);
+
+  const availDateRaw = document.getElementById('editAvailDate').value;
+  // Format availDate display from date input if available date field is empty
+  let availDisplay = document.getElementById('editAvailable').value.trim();
+  if (!availDisplay && availDateRaw) {
+    availDisplay = new Date(availDateRaw + 'T12:00:00').toLocaleDateString('en-US', { month: 'long', day: '2-digit', year: 'numeric' });
+  }
+
+  const updated = {
+    id:          id ? parseInt(id) : Math.max(...workingListings.map(l => l.id), 0) + 1,
+    address,
+    city:        document.getElementById('editCity').value.trim(),
+    price:       document.getElementById('editPrice').value.trim(),
+    priceNum:    parseFloat(document.getElementById('editPriceNum').value) || 0,
+    beds:        parseInt(document.getElementById('editBeds').value) || 0,
+    baths:       parseFloat(document.getElementById('editBaths').value) || 0,
+    status:      statusVal,
+    statusLabel: statusLabels[statusVal],
+    available:   availDisplay,
+    availDate:   availDateRaw,
+    yearBuilt:   document.getElementById('editYearBuilt').value ? parseInt(document.getElementById('editYearBuilt').value) : null,
+    desc:        document.getElementById('editDesc').value.trim(),
+    images,
+    tag:         document.getElementById('editTag').value,
+  };
+
+  if (id) {
+    const idx = workingListings.findIndex(l => l.id === parseInt(id));
+    if (idx !== -1) workingListings[idx] = updated;
+  } else {
+    workingListings.push(updated);
+  }
+
+  hasChanges = true;
+  document.getElementById('pushStatus').textContent = '⚠️ Unpublished changes — click "Publish to Live Site" to go live.';
+  closeModal();
+  renderTable();
+  showToast('✓ Listing saved', 'success');
+}
+
+// ── DELETE ──────────────────────────────────────────────────────────
+function openConfirm(id) {
+  deleteTargetId = id;
+  const l = workingListings.find(x => x.id === id);
+  document.getElementById('confirmMsg').textContent = `Delete "${l?.address}"? This cannot be undone.`;
+  document.getElementById('confirmOverlay').classList.add('open');
+}
+function closeConfirm() {
+  document.getElementById('confirmOverlay').classList.remove('open');
+  deleteTargetId = null;
+}
+function confirmDelete() {
+  workingListings = workingListings.filter(l => l.id !== deleteTargetId);
+  hasChanges = true;
+  document.getElementById('pushStatus').textContent = '⚠️ Unpublished changes — click "Publish to Live Site" to go live.';
+  closeConfirm();
+  renderTable();
+  showToast('Listing deleted', 'success');
+}
+
+// ── GITHUB PUSH ──────────────────────────────────────────────────────
+async function pushToGitHub() {
+  const btn = document.querySelector('.btn-push');
+  btn.textContent = 'Publishing…';
+  btn.disabled = true;
+
+  try {
+    // Build new listings.js content
+    const content = buildListingsJs();
+
+    // Get current SHA
+    const infoResp = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/listings.js`, {
+      headers: { 'Authorization': 'token ' + GITHUB_TOKEN, 'Accept': 'application/vnd.github.v3+json' }
+    });
+    const info = await infoResp.json();
+    const sha = info.sha;
+
+    // Push
+    const encoded = btoa(unescape(encodeURIComponent(content)));
+    const pushResp = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/listings.js`, {
+      method: 'PUT',
+      headers: { 'Authorization': 'token ' + GITHUB_TOKEN, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: 'Update listings via admin dashboard', content: encoded, sha })
+    });
+
+    if (pushResp.ok) {
+      hasChanges = false;
+      document.getElementById('pushStatus').textContent = '✅ Published! Live site will update in ~30 seconds.';
+      showToast('✅ Live site updated!', 'success');
+    } else {
+      throw new Error('GitHub push failed');
+    }
+  } catch(e) {
+    showToast('❌ Publish failed. Check your connection.', 'error');
+    console.error(e);
+  }
+
+  btn.textContent = '🚀 Publish to Live Site';
+  btn.disabled = false;
+}
+
+function buildListingsJs() {
+  const header = `// =============================================================
+//  Madsen Properties — LISTINGS DATA
+//  Last updated via admin dashboard: ${new Date().toLocaleDateString()}
+//
+//  TO EDIT: Use the Admin Dashboard at admin-dashboard.html
+//  Or edit manually — see comments below for field reference.
+// =============================================================
+
+function getUploads(id) {
+  try { return JSON.parse(localStorage.getItem('uploads_' + id) || '[]'); } catch(e) { return []; }
+}
+
+const listingsData = [\n`;
+
+  const body = workingListings.map(l => {
+    const imgs = l.images.map(s => `      '${s}'`).join(',\n');
+    return `  {
+    id:          ${l.id},
+    address:     '${esc(l.address)}',
+    city:        '${esc(l.city)}',
+    price:       '${esc(l.price)}',
+    priceNum:    ${l.priceNum},
+    beds:        ${l.beds},
+    baths:       ${l.baths},
+    status:      '${l.status}',
+    statusLabel: '${esc(l.statusLabel)}',
+    available:   '${esc(l.available)}',
+    availDate:   '${l.availDate}',
+    yearBuilt:   ${l.yearBuilt || null},
+    desc: '${esc(l.desc)}',
+    images: [\n${imgs}\n    ],
+    tag: '${l.tag}',
+  }`;
+  }).join(',\n\n');
+
+  const footer = `\n];\n\nconst listings = listingsData.map(l => ({\n  ...l,\n  get images() { return [...getUploads(l.id), ...l.images]; }\n}));\n`;
+
+  return header + body + footer;
+}
+
+function esc(s) {
+  return (s || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/\n/g, '\\n');
+}
+
+// ── TOAST ──────────────────────────────────────────────────────────
+function showToast(msg, type = '') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast ' + type;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// Close modal on overlay click
+document.getElementById('editModal').addEventListener('click', e => {
+  if (e.target === document.getElementById('editModal')) closeModal();
+});
+document.getElementById('confirmOverlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('confirmOverlay')) closeConfirm();
+});
+
+// Enter to login
+document.getElementById('loginUser').addEventListener('keydown', e => {
+  if (e.key === 'Enter') document.getElementById('loginPass').focus();
+});
+</script>
+</body>
+</html>
