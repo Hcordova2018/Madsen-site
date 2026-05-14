@@ -3,7 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Listing | Madsen Properties</title>
+  <title>Rental Property | Madsen Properties — Chico CA</title>
+  <meta name="description" content="View rental property details, photos, and apply online. Managed by Madsen Properties — award-winning property management in Chico, CA. Call (530) 570-6192." />
+  <link rel="canonical" href="https://madsenpropertymgmt.com/rentals/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Rental Property | Madsen Properties" />
+  <meta property="og:description" content="View rental details and apply online. Managed by Madsen Properties, Chico CA." />
+  <meta property="og:image" content="https://madsenpropertymgmt.com/public/uploads/Madsen-properties-chico-slider-2.png" />
+  <meta property="og:site_name" content="Madsen Properties" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Rental Property | Madsen Properties" />
+  <meta name="twitter:description" content="View rental details and apply online." />
+  <meta name="twitter:image" content="https://madsenpropertymgmt.com/public/uploads/Madsen-properties-chico-slider-2.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;700&family=Martel:wght@400;700&display=swap" rel="stylesheet" />
@@ -12,7 +23,7 @@
     /* ── Listing page extras ── */
     .listing-hero {
       position: relative;
-      background: #111;
+      background: #e8e8e8;
       height: 560px;
       overflow: hidden;
     }
@@ -409,8 +420,8 @@
         <div class="sidebar-contact">
           <h4>Contact Us</h4>
           <!-- UPDATE with real phone/email -->
-          <div class="sidebar-contact-item">📞 <a href="tel:+15305551234">(530) 555-1234</a></div>
-          <div class="sidebar-contact-item">✉️ <a href="mailto:info@madsenpropertymgmt.com">info@madsenpropertymgmt.com</a></div>
+          <div class="sidebar-contact-item">📞 <a href="tel:+15305706192">(530) 570-6192</a></div>
+          <div class="sidebar-contact-item">✉️ <a href="mailto:team@madsenpropertymgmt.com">team@madsenpropertymgmt.com</a></div>
           <div class="sidebar-contact-item">🕐 Mon–Fri: 9am – 5pm</div>
         </div>
       </div>
@@ -463,6 +474,12 @@ if (!listing) {
     '<p style="padding:40px 0;color:#999;">Listing not found. <a href="index.html">Back to rentals</a></p>';
 } else {
   initPage(listing);
+  // Update meta tags dynamically for this listing
+  document.title = listing.address + ', ' + listing.city.split(',')[0] + ' — ' + bedLabel(listing.beds) + '/' + listing.baths + ' Bath Rental | Madsen Properties';
+  document.querySelector('meta[name="description"]').content = listing.price + '/mo — ' + bedLabel(listing.beds) + ', ' + listing.baths + ' Bath rental at ' + listing.address + ', ' + listing.city + '. ' + listing.desc.substring(0, 100) + ' Call (530) 570-6192.';
+  document.querySelector('meta[property="og:title"]').content = listing.address + ' — ' + bedLabel(listing.beds) + '/' + listing.baths + ' Bath | Madsen Properties';
+  document.querySelector('meta[property="og:description"]').content = listing.price + '/mo · ' + bedLabel(listing.beds) + ' · ' + listing.baths + ' Bath · Available: ' + listing.available;
+  if (listing.images && listing.images.length > 0) document.querySelector('meta[property="og:image"]').content = listing.images[0];
 }
 
 function initPage(l) {
@@ -539,17 +556,22 @@ function initPage(l) {
 // ── Photo hero ──
 let heroI = 0;
 let heroImgs = [];
+let loadedCount = 0;
 
 function initPhotos(l) {
   heroImgs = l.images;
+  loadedCount = 0;
+
   const track = document.getElementById('heroTrack');
   const rail  = document.getElementById('heroRail');
   const grid  = document.getElementById('detailPhotoGrid');
 
+  // Render all images immediately — track which ones actually load
   track.innerHTML = heroImgs.map((src, i) =>
     `<img src="${src}" alt="${l.address} — photo ${i+1}"
       loading="${i === 0 ? 'eager' : 'lazy'}"
-      onerror="this.style.display='none'" />`
+      onload="onHeroImgLoad()"
+      onerror="this.parentElement.removeChild(this); onHeroImgError();" />`
   ).join('');
 
   rail.innerHTML = heroImgs.map((src, i) =>
@@ -569,7 +591,36 @@ function initPhotos(l) {
     </div>`
   ).join('');
 
+  // Initial count
   updateHeroCount();
+
+  // If after 1.5s nothing loaded, show placeholder
+  setTimeout(() => {
+    const trackImgs = track.querySelectorAll('img');
+    if (trackImgs.length === 0) showPlaceholder();
+  }, 1500);
+}
+
+function onHeroImgLoad() {
+  loadedCount++;
+  updateHeroCount();
+}
+
+function onHeroImgError() {
+  // Recount remaining images in track and update
+  const remaining = document.getElementById('heroTrack').querySelectorAll('img').length;
+  if (remaining === 0) showPlaceholder();
+  else updateHeroCount();
+}
+
+function showPlaceholder() {
+  document.getElementById('heroTrack').innerHTML =
+    `<div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;background:#f5f5f5;">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+      <span style="color:#bbb;font-size:14px;font-weight:300;">Photos available on live site</span>
+    </div>`;
+  document.getElementById('heroCount').textContent = '—';
+  heroImgs = [];
 }
 
 function goToSlide(n) {
