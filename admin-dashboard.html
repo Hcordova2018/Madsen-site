@@ -404,9 +404,10 @@ const ADMIN_PASSWORD = 'madsen2026';
 const ADMIN_USERNAME = 'admin';
 
 // GitHub config for publishing
-const GITHUB_TOKEN = 'GITHUB_TOKEN_PLACEHOLDER';
+// Token is stored in localStorage after first entry — never hardcoded
 const GITHUB_OWNER = 'Hcordova2018';
 const GITHUB_REPO  = 'Madsen-site';
+let GITHUB_TOKEN = localStorage.getItem('madsen_gh_token') || '';
 // ────────────────────────────────────────────────────────────────
 
 // Working copy of listings — loaded after login
@@ -713,6 +714,14 @@ function confirmDelete() {
 
 // ── GITHUB PUSH ──────────────────────────────────────────────────────
 async function pushToGitHub() {
+  // Prompt for token if not saved
+  if (!GITHUB_TOKEN) {
+    const t = prompt('Enter your GitHub token to publish:\n(This will be saved in your browser for future use)');
+    if (!t) return;
+    GITHUB_TOKEN = t.trim();
+    localStorage.setItem('madsen_gh_token', GITHUB_TOKEN);
+  }
+
   const btn = document.querySelector('.btn-push');
   btn.textContent = 'Publishing…';
   btn.disabled = true;
