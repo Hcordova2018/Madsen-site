@@ -360,7 +360,19 @@
         </div>
         <div class="form-group full">
           <label>Description</label>
-          <textarea id="editDesc" placeholder="Describe the property…"></textarea>
+          <textarea id="editDesc" placeholder="Describe the property… Use a blank line between paragraphs." style="min-height:120px;"></textarea>
+        </div>
+        <div class="form-group full">
+          <label>Features &amp; Amenities <span style="font-weight:300;text-transform:none;letter-spacing:0;">(one per line, e.g. "Central A/C", "Parking", "Washer/Dryer")</span></label>
+          <textarea id="editFeatures" placeholder="Central A/C & Heat&#10;Washer/Dryer&#10;Parking Included&#10;Pet Friendly" style="min-height:80px;"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Lease Term</label>
+          <input id="editLeaseTerm" type="text" placeholder="e.g. 12-month lease, Month-to-month" />
+        </div>
+        <div class="form-group">
+          <label>Utilities</label>
+          <input id="editUtilities" type="text" placeholder="e.g. Owner pays water/trash. Tenant pays PG&amp;E." />
         </div>
       </div>
 
@@ -532,8 +544,11 @@ function openModal(id) {
   document.getElementById('editTag').value        = l?.tag || 'chico';
   document.getElementById('editAvailable').value  = l?.available || '';
   document.getElementById('editAvailDate').value  = l?.availDate || '';
-  document.getElementById('editYearBuilt').value  = l?.yearBuilt || '';
-  document.getElementById('editDesc').value       = l?.desc || '';
+  document.getElementById('editYearBuilt').value   = l?.yearBuilt || '';
+  document.getElementById('editDesc').value        = l?.desc || '';
+  document.getElementById('editFeatures').value   = l?.features ? l.features.join('\n') : '';
+  document.getElementById('editLeaseTerm').value  = l?.leaseTerms || '';
+  document.getElementById('editUtilities').value  = l?.utilities || '';
 
   // Images
   const imgs = l?.images || [''];
@@ -675,6 +690,9 @@ function saveListing() {
     availDate:   availDateRaw,
     yearBuilt:   document.getElementById('editYearBuilt').value ? parseInt(document.getElementById('editYearBuilt').value) : null,
     desc:        document.getElementById('editDesc').value.trim(),
+    features:    document.getElementById('editFeatures').value.trim() ? document.getElementById('editFeatures').value.trim().split('\n').map(f => f.trim()).filter(Boolean) : [],
+    leaseTerms:  document.getElementById('editLeaseTerm').value.trim() || null,
+    utilities:   document.getElementById('editUtilities').value.trim() || null,
     images,
     tag:         document.getElementById('editTag').value,
   };
@@ -788,6 +806,9 @@ const listingsData = [\n`;
     availDate:   '${l.availDate}',
     yearBuilt:   ${l.yearBuilt || null},
     desc: '${esc(l.desc)}',
+    ${l.features && l.features.length > 0 ? `features: [${l.features.map(f => `'${esc(f)}'`).join(', ')}],` : ''}
+    ${l.leaseTerms ? `leaseTerms: '${esc(l.leaseTerms)}',` : ''}
+    ${l.utilities ? `utilities: '${esc(l.utilities)}',` : ''}
     images: [\n${imgs}\n    ],
     tag: '${l.tag}',
   }`;
