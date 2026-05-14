@@ -196,8 +196,8 @@ const listingsData = [
     baths:       2,
     status:      'soon',
     statusLabel: 'Coming Soon',
-    available:   'September 01, 2026',
-    availDate:   '2026-09-01',
+    available:   'June 15, 2026',
+    availDate:   '2026-06-15',
     yearBuilt:   1973,
     desc: 'Beautiful 5-bed/2-bath home with living room, fireplace, and brand new carpet throughout. Great Chico neighborhood.',
     images: [
@@ -212,8 +212,8 @@ const listingsData = [
     id: 7,
     address:     '1481 Montgomery St',
     city:        'Oroville, California 95965',
-    price:       '$2,200/mo',
-    priceNum:    2200,
+    price:       '$2,400/mo',
+    priceNum:    2400,
     beds:        2,
     baths:       2,
     status:      'available',
@@ -337,31 +337,6 @@ const listingsData = [
       'https://madsenpropertymgmt.com/public/uploads/1872_5th_Ave__9_(2).jpg',
     ],
     tag: 'oroville',
-  },
-
-  // ── LISTING 13 ─────────────────────────────────────────────────
-  {
-    id: 13,
-    address:     '225 Mission Serra Terrace',
-    city:        'Chico, California 95926',
-    price:       '$2,000/mo',
-    priceNum:    2000,
-    beds:        2,
-    baths:       1,
-    status:      'available',
-    statusLabel: 'Available Now',
-    available:   'May 18, 2026',
-    availDate:   '2026-05-18',
-    yearBuilt:   1990,
-    desc: 'Well manicured two bedroom, one bath plus a den situated in one of Chico\'s most desirable HOA communities. Fully fenced front and backyard. Home features solid surface flooring, dishwasher, finished garage, gas fireplace, and ceiling fans throughout. Sorry, this is a no pet property.',
-    images: [
-      'https://raw.githubusercontent.com/Hcordova2018/Madsen-site/main/images/new-listing-l5hw7i-1.jpg',
-      'https://raw.githubusercontent.com/Hcordova2018/Madsen-site/main/images/new-listing-m05oxc-2.jpg',
-      'https://raw.githubusercontent.com/Hcordova2018/Madsen-site/main/images/new-listing-wg9sz0-3.jpg',
-      'https://raw.githubusercontent.com/Hcordova2018/Madsen-site/main/images/new-listing-l3cfeb-4.jpg',
-      'https://raw.githubusercontent.com/Hcordova2018/Madsen-site/main/images/new-listing-49af5l-5.jpg',
-    ],
-    tag: 'chico',
   },
 
   // ── ADD NEW LISTINGS ABOVE THIS LINE ───────────────────────────
