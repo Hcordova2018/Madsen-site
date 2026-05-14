@@ -339,6 +339,30 @@ const listingsData = [
     tag: 'oroville',
   },
 
+  // ── LISTING 13 ─────────────────────────────────────────────────
+  {
+    id: 13,
+    address:     '225 Mission Serra Terrace',
+    city:        'Chico, California 95926',
+    price:       '$2,000/mo',
+    priceNum:    2000,
+    beds:        2,
+    baths:       1,
+    status:      'available',
+    statusLabel: 'Available Now',
+    available:   'May 18, 2026',
+    availDate:   '2026-05-18',
+    yearBuilt:   1990,
+    desc: 'Well manicured two bedroom, one bath plus a den situated in one of Chico\'s most desirable HOA communities. Fully fenced front and backyard. Home features solid surface flooring, dishwasher, finished garage, gas fireplace, and ceiling fans throughout. Sorry, this is a no pet property.',
+    images: [
+      'https://raw.githubusercontent.com/Hcordova2018/Madsen-site/main/images/new-listing-91f4xx-1.jpg',
+      'https://raw.githubusercontent.com/Hcordova2018/Madsen-site/main/images/new-listing-vicqne-2.jpg',
+      'https://raw.githubusercontent.com/Hcordova2018/Madsen-site/main/images/new-listing-z0lvcf-3.jpg',
+      'https://raw.githubusercontent.com/Hcordova2018/Madsen-site/main/images/new-listing-892zmk-4.jpg',
+    ],
+    tag: 'chico',
+  },
+
   // ── ADD NEW LISTINGS ABOVE THIS LINE ───────────────────────────
   // Copy any listing block above, paste it here, and increment the id number.
 
