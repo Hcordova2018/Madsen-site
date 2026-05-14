@@ -355,7 +355,7 @@ const listingsData = [
     yearBuilt:   1968,
     desc: 'Spacious 3-bed/2-bath single family home in Lodi. 1,979 sq ft with an open floor plan, central A/C, attached garage, and a large backyard. Quiet neighborhood, close to schools and shopping.',
     images: [
-      'https://raw.githubusercontent.com/Hcordova2018/Madsen-site/main/images/re-test-xhgwbg-1.png',
+      'https://raw.githubusercontent.com/Hcordova2018/Madsen-site/main/images/re-test-gqg517-1.png',
     ],
     tag: 'lodi',
   },
