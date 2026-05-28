@@ -223,6 +223,60 @@ footer ul a:hover { color: #bc5d1f; }
 .footer-bottom { border-top: 1px solid #e2e2e2; padding-top: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
 .footer-bottom p { font-size: 12.5px; color: #aaa; font-weight: 300; }
 
+/* ── Shared inner-page footer ── */
+.footer-inner-page { background: #f7f7f7; border-top: 1px solid #ddd; padding: 48px 0 20px; }
+.footer-inner-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr 1.1fr;
+  gap: 40px;
+  margin-bottom: 32px;
+}
+.footer-inner-page .fi-brand img { height: 58px; margin-bottom: 10px; display: block; }
+.footer-inner-page .fi-brand p { font-size: 13px; color: #888; font-weight: 300; line-height: 1.65; }
+.footer-inner-page h4 { font-family: 'Martel', serif; font-size: 13px; font-weight: 700; color: #6f6f6f; margin-bottom: 12px; text-transform: uppercase; letter-spacing: .05em; }
+.footer-inner-page .fi-links { display: flex; flex-direction: column; gap: 7px; }
+.footer-inner-page .fi-links a { color: #888; font-size: 13.5px; font-weight: 300; text-decoration: none; transition: color .18s; }
+.footer-inner-page .fi-links a:hover { color: #bc5d1f; }
+.footer-inner-page .fi-contact p { font-size: 13.5px; color: #888; font-weight: 300; margin-bottom: 5px; }
+.footer-inner-page .fi-contact a { color: #bc5d1f; text-decoration: none; font-weight: 400; }
+.footer-inner-page .fi-contact a:hover { text-decoration: underline; }
+/* Social */
+.fi-social { display: flex; gap: 10px; margin-top: 10px; }
+.fi-social a { display: flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 50%; background: #ebebeb; color: #666; transition: background .18s, color .18s; }
+.fi-social a:hover { background: #bc5d1f; color: #fff; }
+/* Mailing list */
+.fi-mail-form { display: flex; gap: 0; margin-top: 10px; }
+.fi-mail-form input {
+  flex: 1; padding: 9px 12px; border: 1px solid #ddd; border-right: none;
+  border-radius: 4px 0 0 4px; font-size: 13px; font-family: 'Roboto', sans-serif;
+  background: #fff; color: #333; outline: none;
+}
+.fi-mail-form input:focus { border-color: #bc5d1f; }
+.fi-mail-form button {
+  background: #bc5d1f; color: #fff; border: none; padding: 9px 14px;
+  border-radius: 0 4px 4px 0; font-size: 12px; font-weight: 700;
+  font-family: 'Roboto', sans-serif; cursor: pointer; white-space: nowrap;
+  transition: background .18s;
+}
+.fi-mail-form button:hover { background: #ab4000; }
+.fi-mail-success { display: none; font-size: 13px; color: #3a8a3a; margin-top: 6px; }
+/* Bottom bar */
+.footer-inner-bottom {
+  border-top: 1px solid #e2e2e2; padding-top: 16px;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 8px;
+}
+.footer-inner-bottom p { font-size: 12px; color: #aaa; font-weight: 300; }
+.footer-inner-bottom a { color: #aaa; font-size: 12px; text-decoration: none; transition: color .18s; }
+.footer-inner-bottom a:hover { color: #bc5d1f; }
+
+@media (max-width: 900px) {
+  .footer-inner-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 540px) {
+  .footer-inner-grid { grid-template-columns: 1fr; gap: 28px; }
+}
+
 /* ── Back to top ── */
 .back-to-top { position: fixed; bottom: 24px; right: 24px; background: #bc5d1f; color: #fff; border: none; border-radius: 50%; width: 42px; height: 42px; font-size: 1.1rem; cursor: pointer; box-shadow: 0 2px 10px rgba(0,0,0,.2); z-index: 500; display: none; align-items: center; justify-content: center; transition: background .18s; }
 .back-to-top:hover { background: #ab4000; }

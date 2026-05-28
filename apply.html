@@ -317,49 +317,78 @@
   </div>
 
   <!-- ── FOOTER ── -->
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <div class="footer-brand">
-        <a href="index.html" class="logo logo-footer">
-          <img src="https://madsenpropertymgmt.com/public/uploads/madsen-logo-150w.png"
-               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
-               alt="Madsen Properties" class="logo-img" />
-          <span class="logo-text" style="display:none">Madsen<br><span>Properties</span></span>
-        </a>
-        <p class="footer-tagline">Award-winning property management<br>across Chico &amp; Northern California.</p>
-      </div>
-      <div class="footer-links">
-        <h4>Quick Links</h4>
-        <a href="index.html">Home</a>
-        <a href="about.html">About Us</a>
-        <a href="services.html">Services</a>
-        <a href="index.html#rentals">Rentals</a>
-        <a href="apply.html">Apply</a>
-        <a href="resident-benefits.html">Resident Benefits</a>
-        <a href="index.html#contact">Contact</a>
-      </div>
-      <div class="footer-contact">
-        <h4>Contact</h4>
-        <p><a href="tel:+15305706192">(530) 570-6192</a></p>
-        <p><a href="mailto:team@madsenpropertymgmt.com">team@madsenpropertymgmt.com</a></p>
-        <p>Chico, CA 95926</p>
-        <div class="social-links" style="margin-top:12px">
-          <a href="https://www.facebook.com/MadsenProperties" target="_blank" rel="noopener" aria-label="Facebook">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+  <footer class="footer-inner-page">
+    <div class="container">
+      <div class="footer-inner-grid">
+
+        <!-- Brand -->
+        <div class="fi-brand">
+          <a href="index.html">
+            <img src="https://madsenpropertymgmt.com/public/uploads/logo.png" alt="Madsen Properties" />
           </a>
-          <a href="https://www.instagram.com/madsenpropertymgmt/" target="_blank" rel="noopener" aria-label="Instagram">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
-          </a>
+          <p>Award-winning property management<br>across Chico &amp; Northern California.</p>
         </div>
+
+        <!-- Quick Links -->
+        <div>
+          <h4>Quick Links</h4>
+          <div class="fi-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About Us</a>
+            <a href="services.html">Services</a>
+            <a href="index.html#rentals">Rentals</a>
+            <a href="apply.html">Apply</a>
+            <a href="resident-benefits.html">Resident Benefits</a>
+            <a href="index.html#contact">Contact</a>
+          </div>
+        </div>
+
+        <!-- Contact -->
+        <div class="fi-contact">
+          <h4>Contact Us</h4>
+          <p>2607 Forest Ave #110<br>Chico, CA 95928</p>
+          <p style="margin-top:8px"><a href="tel:+15305706192">(530) 570-6192</a></p>
+          <p><a href="mailto:team@madsenpropertymgmt.com">team@madsenpropertymgmt.com</a></p>
+          <p style="margin-top:8px;font-size:12px;color:#aaa;">Mon&ndash;Fri 9am&ndash;5pm</p>
+        </div>
+
+        <!-- Connect / Mailing List -->
+        <div>
+          <h4>Connect With Us</h4>
+          <div class="fi-social">
+            <a href="https://www.facebook.com/MadsenProperties" target="_blank" rel="noopener" aria-label="Facebook" style="width:42px;height:42px;">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+            <a href="https://www.instagram.com/madsenpropertymgmt/" target="_blank" rel="noopener" aria-label="Instagram" style="width:42px;height:42px;">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            </a>
+            <a href="mailto:team@madsenpropertymgmt.com" aria-label="Email" style="width:42px;height:42px;">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </a>
+          </div>
+          <h4 style="margin-top:20px">Join Our Mailing List</h4>
+          <p style="font-size:13px;color:#888;font-weight:300;margin-bottom:8px">Get the latest listings and news from Madsen Properties.</p>
+          <form class="fi-mail-form" onsubmit="handleMailSub(event,this)">
+            <input type="email" placeholder="Your email address" required />
+            <button type="submit">Subscribe</button>
+          </form>
+          <p class="fi-mail-success">Thanks for subscribing!</p>
+        </div>
+
       </div>
-      <div class="footer-bottom-row">
+      <div class="footer-inner-bottom">
         <p>&copy; 2025 Madsen Properties &mdash; CalBRE #01912310 &mdash; All Rights Reserved</p>
-        <a href="admin-dashboard.html" class="staff-login-link">Staff Login</a>
+        <a href="admin-dashboard.html">Staff Login</a>
       </div>
     </div>
   </footer>
 
   <script>
+    function handleMailSub(e, form) {
+      e.preventDefault();
+      form.style.display = "none";
+      form.nextElementSibling.style.display = "block";
+    }
     const hamburger = document.getElementById('hamburger');
     const navList = document.getElementById('navList');
     hamburger.addEventListener('click', () => {
