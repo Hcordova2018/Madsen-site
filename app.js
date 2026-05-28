@@ -191,19 +191,17 @@ const btt = document.getElementById('backToTop');
 window.addEventListener('scroll', () => btt.classList.toggle('visible', window.scrollY > 400));
 
 /* ── Contact form ── */
-document.getElementById('contactForm').addEventListener('submit', function(e) {
+document.getElementById('contactForm').addEventListener('submit', async function(e) {
   e.preventDefault();
-  const btn = this.querySelector('.btn-submit');
-  btn.textContent = 'Sending…';
-  btn.disabled = true;
-  setTimeout(() => {
-    btn.textContent = 'Send Message';
-    btn.disabled = false;
-    const msg = document.getElementById('formSuccess');
-    msg.style.display = 'block';
-    this.reset();
-    setTimeout(() => { msg.style.display = 'none'; }, 5000);
-  }, 1000);
+  const form = this;
+  const data = new FormData(form);
+  try {
+    await fetch('/', { method: 'POST', headers: {'Content-Type': 'application/x-www-form-urlencoded'}, body: new URLSearchParams(data).toString() });
+    document.getElementById('formSuccess').style.display = 'block';
+    form.reset();
+  } catch(err) {
+    alert('Sorry, there was an error sending your message. Please call us at (530) 570-6192.');
+  }
 });
 
 /* ── Init ── */
