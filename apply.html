@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apply | Madsen Properties — Rental Application Chico, CA</title>
+  <meta name="description" content="Apply to rent a Madsen Properties home in Chico, Paradise, Oroville or Butte County. $40 application fee. All applicants 18+ must apply. 650+ credit score required." />
+  <meta name="keywords" content="rental application Chico CA, apply to rent Chico, Madsen Properties apply, apartments for rent Chico apply, tenant application Butte County" />
+  <link rel="canonical" href="https://madsenpropertymgmt.com/apply/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Apply | Madsen Properties" />
+  <meta property="og:description" content="Apply to rent a Madsen Properties home. $40 application fee. 650+ credit score required." />
+  <meta property="og:url" content="https://madsenpropertymgmt.com/apply/" />
+  <meta property="og:image" content="https://madsenpropertymgmt.com/public/uploads/Madsen0130.jpg" />
+  <meta property="og:site_name" content="Madsen Properties" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;700&family=Martel:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .page-hero {
+      background: #f7f7f7;
+      border-bottom: 1px solid #e5e5e5;
+      padding: 48px 0 40px;
+    }
+    .page-hero h1 {
+      font-family: 'Roboto', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.4rem);
+      font-weight: 700;
+      color: #ab4000;
+      margin-bottom: 8px;
+    }
+    .page-hero p {
+      color: #6f6f6f;
+      font-size: 16px;
+      font-weight: 300;
+      max-width: 560px;
+    }
+
+    .apply-layout {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 48px;
+      padding: 56px 0;
+    }
+    @media (max-width: 768px) {
+      .apply-layout { grid-template-columns: 1fr; }
+    }
+
+    .apply-main h2 {
+      font-family: 'Roboto', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #222;
+      margin-bottom: 16px;
+    }
+    .apply-main p {
+      color: #555;
+      font-size: 15px;
+      line-height: 1.75;
+      margin-bottom: 14px;
+    }
+
+    /* Requirements list */
+    .req-list {
+      list-style: none;
+      padding: 0;
+      margin: 24px 0 32px;
+    }
+    .req-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 15px;
+      color: #444;
+      line-height: 1.5;
+    }
+    .req-list li:last-child { border-bottom: none; }
+    .req-check {
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      background: #bc5d1f;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+    }
+    .req-check svg {
+      width: 11px;
+      height: 11px;
+      stroke: #fff;
+      fill: none;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* Apply button */
+    .apply-cta-box {
+      background: #bc5d1f;
+      border-radius: 12px;
+      padding: 32px 28px;
+      text-align: center;
+      color: #fff;
+      margin-bottom: 24px;
+    }
+    .apply-cta-box h3 {
+      font-family: 'Roboto', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .apply-cta-box p {
+      font-size: 14px;
+      opacity: 0.9;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+    .btn-white {
+      background: #fff;
+      color: #bc5d1f;
+      padding: 13px 28px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.2s;
+    }
+    .btn-white:hover { background: #f5e8df; }
+
+    /* Sidebar contact card */
+    .apply-sidebar .contact-card {
+      background: #f7f7f7;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      padding: 28px 24px;
+      margin-bottom: 24px;
+    }
+    .apply-sidebar .contact-card h4 {
+      font-family: 'Roboto', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #222;
+      margin-bottom: 14px;
+    }
+    .apply-sidebar .contact-card p {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 8px;
+    }
+    .apply-sidebar .contact-card a {
+      color: #bc5d1f;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .apply-sidebar .contact-card a:hover { text-decoration: underline; }
+
+    .view-rentals-btn {
+      display: block;
+      background: #fff;
+      border: 2px solid #bc5d1f;
+      color: #bc5d1f;
+      text-align: center;
+      padding: 13px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 15px;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+    .view-rentals-btn:hover { background: #bc5d1f; color: #fff; }
+
+    .note-box {
+      background: #fdf0e8;
+      border: 1px solid #f0caa8;
+      border-radius: 10px;
+      padding: 18px 20px;
+      margin-top: 32px;
+    }
+    .note-box p {
+      font-size: 13.5px;
+      color: #7a3000;
+      margin: 0;
+      line-height: 1.65;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ── -->
+  <header class="site-header">
+    <div class="container nav-inner">
+      <a href="index.html" class="logo">
+        <img src="https://madsenpropertymgmt.com/public/uploads/madsen-logo-150w.png"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
+             alt="Madsen Properties" class="logo-img" />
+        <span class="logo-text" style="display:none">Madsen<br><span>Properties</span></span>
+      </a>
+      <nav class="main-nav" id="mainNav">
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="services.html">Services</a>
+        <a href="index.html#rentals">Rentals</a>
+        <a href="apply.html" class="active">Apply</a>
+        <a href="resident-benefits.html">Resident Benefits</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ── PAGE HERO ── -->
+  <section class="page-hero">
+    <div class="container">
+      <h1>Apply to Rent</h1>
+      <p>Ready to make a Madsen Properties home yours? Review the requirements below and submit your application online.</p>
+    </div>
+  </section>
+
+  <!-- ── MAIN CONTENT ── -->
+  <div class="container">
+    <div class="apply-layout">
+
+      <!-- Left: Requirements -->
+      <div class="apply-main">
+        <h2>Application Requirements</h2>
+        <p>All applications are processed in the order received. To be considered for a rental, each applicant must meet our standard qualification criteria. Please review the requirements carefully before applying.</p>
+
+        <ul class="req-list">
+          <li>
+            <span class="req-check"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span>
+            <span><strong>All occupants 18 or older must apply separately.</strong> Each adult who will reside in the unit must submit their own application and pay the application fee.</span>
+          </li>
+          <li>
+            <span class="req-check"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span>
+            <span><strong>$40 non-refundable application fee</strong> per applicant, paid at time of submission.</span>
+          </li>
+          <li>
+            <span class="req-check"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span>
+            <span><strong>Credit score of 650 or higher.</strong> All applicants must demonstrate well-established credit history meeting this minimum threshold.</span>
+          </li>
+          <li>
+            <span class="req-check"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span>
+            <span><strong>Verifiable income.</strong> Combined household income should typically be at least 2.5–3× the monthly rent. Proof of income (pay stubs, bank statements, offer letter) will be required.</span>
+          </li>
+          <li>
+            <span class="req-check"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span>
+            <span><strong>Rental history verification.</strong> We contact previous landlords to verify your payment history and tenancy in good standing.</span>
+          </li>
+          <li>
+            <span class="req-check"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span>
+            <span><strong>Background check.</strong> A standard background screening is included as part of the application process.</span>
+          </li>
+        </ul>
+
+        <h2>How to Apply</h2>
+        <p>Click the "Apply Now" button to access our secure online application portal. Have your ID, proof of income, and payment method ready. Once submitted, our team will review your application typically within 1–3 business days.</p>
+        <p>If you have questions about a specific property or want to schedule a showing before applying, contact us at <a href="tel:+15305706192" style="color:#bc5d1f;font-weight:600">(530) 570-6192</a> or <a href="mailto:team@madsenpropertymgmt.com" style="color:#bc5d1f;font-weight:600">team@madsenpropertymgmt.com</a>.</p>
+
+        <div class="note-box">
+          <p>⚠️ <strong>Note:</strong> Submitting an application does not guarantee approval or reserve a unit. Properties remain available until a lease is fully executed. We recommend viewing the property and confirming availability before applying.</p>
+        </div>
+      </div>
+
+      <!-- Right: Sidebar -->
+      <div class="apply-sidebar">
+        <div class="apply-cta-box">
+          <h3>Ready to Apply?</h3>
+          <p>Submit your application online through our secure tenant portal. $40 fee per applicant.</p>
+          <a href="https://madsenpropertymgmt.com/apply" target="_blank" rel="noopener" class="btn-white">Apply Now →</a>
+        </div>
+
+        <a href="index.html#rentals" class="view-rentals-btn" style="margin-bottom:24px">View Available Rentals</a>
+
+        <div class="contact-card">
+          <h4>Questions? Contact Us</h4>
+          <p>📞 <a href="tel:+15305706192">(530) 570-6192</a></p>
+          <p>✉️ <a href="mailto:team@madsenpropertymgmt.com">team@madsenpropertymgmt.com</a></p>
+          <p style="margin-top:10px;font-size:13px;color:#888">Mon–Fri 9am–5pm<br>After-hours available for emergencies</p>
+        </div>
+
+        <div class="contact-card">
+          <h4>Already a Tenant?</h4>
+          <p>Access your tenant portal to pay rent, submit maintenance requests, or review your ledger.</p>
+          <a href="https://madsenpropertymgmt.com/tenant-sign-in" target="_blank" rel="noopener" style="display:block;text-align:center;background:#f0f0f0;padding:11px;border-radius:8px;font-weight:600;font-size:14px;color:#444;text-decoration:none;margin-top:8px">Tenant Sign-In →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="logo logo-footer">
+          <img src="https://madsenpropertymgmt.com/public/uploads/madsen-logo-150w.png"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
+               alt="Madsen Properties" class="logo-img" />
+          <span class="logo-text" style="display:none">Madsen<br><span>Properties</span></span>
+        </a>
+        <p class="footer-tagline">Award-winning property management<br>across Chico &amp; Northern California.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="services.html">Services</a>
+        <a href="index.html#rentals">Rentals</a>
+        <a href="apply.html">Apply</a>
+        <a href="resident-benefits.html">Resident Benefits</a>
+        <a href="index.html#contact">Contact</a>
+      </div>
+      <div class="footer-contact">
+        <h4>Contact</h4>
+        <p><a href="tel:+15305706192">(530) 570-6192</a></p>
+        <p><a href="mailto:team@madsenpropertymgmt.com">team@madsenpropertymgmt.com</a></p>
+        <p>Chico, CA 95926</p>
+        <div class="social-links" style="margin-top:12px">
+          <a href="https://www.facebook.com/MadsenProperties" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/madsenpropertymgmt/" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-bottom-row">
+        <p>&copy; 2025 Madsen Properties &mdash; CalBRE #01912310 &mdash; All Rights Reserved</p>
+        <a href="admin-dashboard.html" class="staff-login-link">Staff Login</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const mainNav = document.getElementById('mainNav');
+    hamburger.addEventListener('click', () => {
+      mainNav.classList.toggle('open');
+      hamburger.classList.toggle('active');
+    });
+  </script>
+</body>
+</html>
