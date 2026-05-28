@@ -271,26 +271,33 @@
 <body>
 
   <!-- ── NAV ── -->
-  <header class="site-header">
-    <div class="container nav-inner">
-      <a href="index.html" class="logo">
-        <img src="https://madsenpropertymgmt.com/public/uploads/madsen-logo-150w.png"
-             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
-             alt="Madsen Properties" class="logo-img" />
-        <span class="logo-text" style="display:none">Madsen<br><span>Properties</span></span>
-      </a>
-      <nav class="main-nav" id="mainNav">
-        <a href="index.html">Home</a>
-        <a href="about.html">About Us</a>
-        <a href="services.html" class="active">Services</a>
-        <a href="index.html#rentals">Rentals</a>
-        <a href="apply.html">Apply</a>
-        <a href="resident-benefits.html">Resident Benefits</a>
-        <a href="index.html#contact">Contact</a>
-      </nav>
-      <button class="hamburger" id="hamburger" aria-label="Open menu">
-        <span></span><span></span><span></span>
-      </button>
+  <header role="banner">
+    <div class="header-inner">
+      <div class="logo">
+        <a href="index.html" aria-label="Madsen Properties — home">
+          <img src="https://madsenpropertymgmt.com/public/uploads/logo.png" alt="Madsen Properties" />
+        </a>
+      </div>
+      <div class="header-right">
+        <div class="portal-links">
+          <a href="https://madsenpropertieschico.managebuilding.com/Resident/PublicPages/Home.aspx" target="_blank" rel="noopener">Tenant Sign-In</a>
+          <span>|</span>
+          <a href="https://madsenpropertieschico.managebuilding.com/Manager/PublicPages/Login.aspx" target="_blank" rel="noopener">Owner Login</a>
+        </div>
+        <nav aria-label="Main navigation">
+          <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="navList" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+          </button>
+          <ul class="nav-list" id="navList" role="list">
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="services.html" style="color:#bc5d1f;">Services</a></li>
+            <li><a href="index.html#rentals">Rentals</a></li>
+            <li><a href="apply.html">Apply</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+            <li><a href="resident-benefits.html">Resident Benefits</a></li>
+          </ul>
+        </nav>
+      </div>
     </div>
   </header>
 
@@ -498,12 +505,12 @@
   </footer>
 
   <script>
-    // Hamburger menu
     const hamburger = document.getElementById('hamburger');
-    const mainNav = document.getElementById('mainNav');
+    const navList = document.getElementById('navList');
     hamburger.addEventListener('click', () => {
-      mainNav.classList.toggle('open');
+      navList.classList.toggle('open');
       hamburger.classList.toggle('active');
+      hamburger.setAttribute('aria-expanded', navList.classList.contains('open'));
     });
   </script>
 </body>

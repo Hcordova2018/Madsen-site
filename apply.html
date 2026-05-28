@@ -193,26 +193,33 @@
 <body>
 
   <!-- ── NAV ── -->
-  <header class="site-header">
-    <div class="container nav-inner">
-      <a href="index.html" class="logo">
-        <img src="https://madsenpropertymgmt.com/public/uploads/madsen-logo-150w.png"
-             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
-             alt="Madsen Properties" class="logo-img" />
-        <span class="logo-text" style="display:none">Madsen<br><span>Properties</span></span>
-      </a>
-      <nav class="main-nav" id="mainNav">
-        <a href="index.html">Home</a>
-        <a href="about.html">About Us</a>
-        <a href="services.html">Services</a>
-        <a href="index.html#rentals">Rentals</a>
-        <a href="apply.html" class="active">Apply</a>
-        <a href="resident-benefits.html">Resident Benefits</a>
-        <a href="index.html#contact">Contact</a>
-      </nav>
-      <button class="hamburger" id="hamburger" aria-label="Open menu">
-        <span></span><span></span><span></span>
-      </button>
+  <header role="banner">
+    <div class="header-inner">
+      <div class="logo">
+        <a href="index.html" aria-label="Madsen Properties — home">
+          <img src="https://madsenpropertymgmt.com/public/uploads/logo.png" alt="Madsen Properties" />
+        </a>
+      </div>
+      <div class="header-right">
+        <div class="portal-links">
+          <a href="https://madsenpropertieschico.managebuilding.com/Resident/PublicPages/Home.aspx" target="_blank" rel="noopener">Tenant Sign-In</a>
+          <span>|</span>
+          <a href="https://madsenpropertieschico.managebuilding.com/Manager/PublicPages/Login.aspx" target="_blank" rel="noopener">Owner Login</a>
+        </div>
+        <nav aria-label="Main navigation">
+          <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="navList" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+          </button>
+          <ul class="nav-list" id="navList" role="list">
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="index.html#rentals">Rentals</a></li>
+            <li><a href="apply.html" style="color:#bc5d1f;">Apply</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+            <li><a href="resident-benefits.html">Resident Benefits</a></li>
+          </ul>
+        </nav>
+      </div>
     </div>
   </header>
 
@@ -274,7 +281,20 @@
         <div class="apply-cta-box">
           <h3>Ready to Apply?</h3>
           <p>Submit your application online through our secure tenant portal. $40 fee per applicant.</p>
-          <a href="https://madsenpropertymgmt.com/apply" target="_blank" rel="noopener" class="btn-white">Apply Now →</a>
+          <a href="https://madsenpropertieschico.managebuilding.com/Resident/apps/rentalapp/" target="_blank" rel="noopener" class="btn-white">Apply Online →</a>
+        </div>
+
+        <div class="contact-card" style="margin-bottom:16px;">
+          <h4>Other Application Options</h4>
+          <p style="margin-bottom:12px;">Prefer paper? Download and print the forms below.</p>
+          <a href="https://madsenpropertymgmt.com/public/uploads/paper_app_2023.pdf" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:8px;padding:10px 12px;background:#f7f7f7;border-radius:6px;text-decoration:none;color:#333;font-size:14px;font-weight:600;margin-bottom:8px;border:1px solid #e5e5e5;">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#bc5d1f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Printable Application to Rent
+          </a>
+          <a href="https://madsenpropertymgmt.com/public/uploads/cosigner_of_rental_agreement.pdf" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:8px;padding:10px 12px;background:#f7f7f7;border-radius:6px;text-decoration:none;color:#333;font-size:14px;font-weight:600;border:1px solid #e5e5e5;">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#bc5d1f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Cosigner Application
+          </a>
         </div>
 
         <a href="index.html#rentals" class="view-rentals-btn" style="margin-bottom:24px">View Available Rentals</a>
@@ -341,10 +361,11 @@
 
   <script>
     const hamburger = document.getElementById('hamburger');
-    const mainNav = document.getElementById('mainNav');
+    const navList = document.getElementById('navList');
     hamburger.addEventListener('click', () => {
-      mainNav.classList.toggle('open');
+      navList.classList.toggle('open');
       hamburger.classList.toggle('active');
+      hamburger.setAttribute('aria-expanded', navList.classList.contains('open'));
     });
   </script>
 </body>
