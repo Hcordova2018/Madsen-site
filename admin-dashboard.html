@@ -463,10 +463,20 @@ function doLogin() {
   }
 }
 
+function fixRawGitHubUrls(imgs) {
+  // Migrate any old raw.githubusercontent.com URLs to cdn.jsdelivr.net
+  return (imgs || []).map(url =>
+    url.replace(
+      /https:\/\/raw\.githubusercontent\.com\/([^/]+)\/([^/]+)\/main\//,
+      'https://cdn.jsdelivr.net/gh/$1/$2@main/'
+    )
+  );
+}
+
 function loadListings() {
   // Try to load from listings.js via dynamic script tag
   if (typeof listingsData !== 'undefined') {
-    workingListings = listingsData.map(l => ({...l, images: [...(l.images || [])]}));
+    workingListings = listingsData.map(l => ({...l, images: fixRawGitHubUrls(l.images || [])}));
     renderStats();
     renderTable();
     return;
@@ -476,7 +486,7 @@ function loadListings() {
   script.src = 'listings.js';
   script.onload = () => {
     workingListings = (typeof listingsData !== 'undefined')
-      ? listingsData.map(l => ({...l, images: [...(l.images || [])]}))
+      ? listingsData.map(l => ({...l, images: fixRawGitHubUrls(l.images || [])}))
       : [];
     renderStats();
     renderTable();
@@ -679,7 +689,7 @@ async function uploadImageToGitHub(file) {
   if (!pushResp.ok) throw new Error('Upload failed');
 
   // Return the raw GitHub URL
-  return `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/main/${filename}`;
+  return `https://cdn.jsdelivr.net/gh/${GITHUB_OWNER}/${GITHUB_REPO}@main/${filename}`;
 }
 
 function saveListing() {
