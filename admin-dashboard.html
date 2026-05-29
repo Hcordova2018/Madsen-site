@@ -250,7 +250,7 @@
 
   <!-- Top bar -->
   <div class="dash-topbar">
-    <a href="index.html" class="dash-logo" style="text-decoration:none;" title="Back to website">
+    <a href="index.html" class="dash-logo" style="text-decoration:none;" title="Back to website" onclick="return confirmLeave()">
       <img src="https://madsenpropertymgmt.com/public/uploads/logo.png" alt="Madsen Properties" onerror="this.style.display='none'" />
       <span>Admin Dashboard</span>
     </a>
@@ -300,7 +300,7 @@
   <div class="modal">
     <div class="modal-header">
       <h3 id="modalTitle">Edit Listing</h3>
-      <button class="modal-close" onclick="closeModal()">✕</button>
+      <button class="modal-close" onclick="closeModalSafe()">✕</button>
     </div>
     <div class="modal-body">
       <input type="hidden" id="editId" />
@@ -408,7 +408,7 @@
       <div class="upload-progress" id="uploadProgress"></div>
     </div>
     <div class="modal-footer">
-      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-cancel" onclick="closeModalSafe()">Cancel</button>
       <button class="btn-save" onclick="saveListing()">Save Listing</button>
     </div>
   </div>
@@ -502,7 +502,7 @@ function loadListings() {
 }
 
 function doLogout() {
-  if (hasChanges && !confirm('You have unsaved changes. Sign out anyway?')) return;
+  if (hasChanges && !confirm('You have unpublished changes that have not been pushed to the live site.\n\nAre you sure you want to sign out? Your edits will be lost.')) return;
   document.getElementById('loginScreen').style.display = 'flex';
   document.getElementById('dashboard').style.display = 'none';
   document.getElementById('loginPass').value = '';
@@ -592,6 +592,8 @@ function openModal(id) {
 
   document.getElementById('editModal').classList.add('open');
   document.getElementById('editAddress').focus();
+  // Capture snapshot after DOM settles so we can detect edits
+  setTimeout(() => { modalSnapshot = getModalSnapshot(); }, 50);
 }
 
 function closeModal() {
@@ -879,7 +881,7 @@ function showToast(msg, type = '') {
 
 // Close modal on overlay click
 document.getElementById('editModal').addEventListener('click', e => {
-  if (e.target === document.getElementById('editModal')) closeModal();
+  if (e.target === document.getElementById('editModal')) closeModalSafe();
 });
 document.getElementById('confirmOverlay').addEventListener('click', e => {
   if (e.target === document.getElementById('confirmOverlay')) closeConfirm();
@@ -889,6 +891,56 @@ document.getElementById('confirmOverlay').addEventListener('click', e => {
 document.getElementById('loginUser').addEventListener('keydown', e => {
   if (e.key === 'Enter') document.getElementById('loginPass').focus();
 });
+
+// ── Warn on tab close / navigate away if unpublished changes exist ──
+window.addEventListener('beforeunload', e => {
+  if (hasChanges) {
+    e.preventDefault();
+    e.returnValue = 'You have unpublished changes. Are you sure you want to leave?';
+    return e.returnValue;
+  }
+});
+
+// Confirm before leaving the dashboard with unpublished changes
+function confirmLeave() {
+  if (hasChanges) {
+    return confirm('You have unpublished changes that have not been sent to the live site.\n\nAre you sure you want to leave?');
+  }
+  return true;
+}
+
+// Track whether the modal form has been edited since it was opened
+let modalSnapshot = '';
+function getModalSnapshot() {
+  return [
+    document.getElementById('editAddress').value,
+    document.getElementById('editCity').value,
+    document.getElementById('editPrice').value,
+    document.getElementById('editPriceNum').value,
+    document.getElementById('editBeds').value,
+    document.getElementById('editBaths').value,
+    document.getElementById('editStatus').value,
+    document.getElementById('editTag').value,
+    document.getElementById('editAvailable').value,
+    document.getElementById('editAvailDate').value,
+    document.getElementById('editDesc').value,
+    document.getElementById('editFeatures').value,
+    document.getElementById('editLeaseTerm').value,
+    document.getElementById('editUtilities').value,
+    document.getElementById('editDeposit').value,
+    document.getElementById('editParking').value,
+    document.getElementById('editLaundry').value,
+    document.getElementById('editPets').value,
+    Array.from(document.querySelectorAll('#imgUrlList input')).map(i => i.value).join('|'),
+  ].join('§');
+}
+function hasModalChanges() {
+  return getModalSnapshot() !== modalSnapshot;
+}
+function closeModalSafe() {
+  if (hasModalChanges() && !confirm('Discard changes to this listing?')) return;
+  closeModal();
+}
 </script>
 </body>
 </html>
