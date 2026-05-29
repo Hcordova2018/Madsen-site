@@ -561,7 +561,7 @@ if (!listing) {
 } else {
   initPage(listing);
   // Update meta tags dynamically for this listing
-  document.title = listing.address + ' | Madsen Properties';
+  document.title = listing.address + ', ' + listing.city.split(',')[0] + ' ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ ' + bedLabel(listing.beds) + '/' + listing.baths + ' Bath Rental | Madsen Properties';
   document.querySelector('meta[name="description"]').content = listing.price + '/mo ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ ' + bedLabel(listing.beds) + ', ' + listing.baths + ' Bath rental at ' + listing.address + ', ' + listing.city + '. ' + listing.desc.substring(0, 100) + ' Call (530) 570-6192.';
   document.querySelector('meta[property="og:title"]').content = listing.address + ' ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ ' + bedLabel(listing.beds) + '/' + listing.baths + ' Bath | Madsen Properties';
   document.querySelector('meta[property="og:description"]').content = listing.price + '/mo ÃÂÃÂÃÂÃÂ· ' + bedLabel(listing.beds) + ' ÃÂÃÂÃÂÃÂ· ' + listing.baths + ' Bath ÃÂÃÂÃÂÃÂ· Available: ' + listing.available;
