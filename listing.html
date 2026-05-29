@@ -673,48 +673,9 @@ function initPage(l) {
 // ── Photo hero ──
 let heroI = 0;
 let heroImgs = [];
-let pendingImgs = 0;
-let resolvedImgs = [];
 
 function initPhotos(l) {
-  const allSrcs = l.images || [];
-  heroImgs = [];
-  resolvedImgs = [];
-  heroI = 0;
-
-  const track = document.getElementById('heroTrack');
-  const rail  = document.getElementById('heroRail');
-  const grid  = document.getElementById('detailPhotoGrid');
-
-  if (allSrcs.length === 0) { showPlaceholder(); return; }
-
-  // Probe all images first using Image() objects — only render ones that load
-  pendingImgs = allSrcs.length;
-  resolvedImgs = new Array(allSrcs.length).fill(null);
-
-  allSrcs.forEach((src, i) => {
-    const img = new Image();
-    img.onload = () => {
-      resolvedImgs[i] = src;
-      pendingImgs--;
-      if (pendingImgs === 0) buildGallery(l, resolvedImgs.filter(Boolean));
-    };
-    img.onerror = () => {
-      resolvedImgs[i] = null;
-      pendingImgs--;
-      if (pendingImgs === 0) buildGallery(l, resolvedImgs.filter(Boolean));
-    };
-    img.src = src;
-  });
-
-  // Fallback: if nothing resolves in 4s, show placeholder
-  setTimeout(() => {
-    if (heroImgs.length === 0) showPlaceholder();
-  }, 4000);
-}
-
-function buildGallery(l, goodSrcs) {
-  heroImgs = goodSrcs;
+  heroImgs = (l.images || []).slice();
   heroI = 0;
 
   const track = document.getElementById('heroTrack');
@@ -723,14 +684,17 @@ function buildGallery(l, goodSrcs) {
 
   if (heroImgs.length === 0) { showPlaceholder(); return; }
 
+  // Render immediately — let browser handle load/error per image
   track.innerHTML = heroImgs.map((src, i) =>
     `<img src="${src}" alt="${l.address} — photo ${i+1}"
-      loading="${i === 0 ? 'eager' : 'lazy'}" />`
+      loading="${i === 0 ? 'eager' : 'lazy'}"
+      onerror="onTrackImgError(this)" />`
   ).join('');
 
   rail.innerHTML = heroImgs.map((src, i) =>
     `<img src="${src}" alt="" class="${i === 0 ? 'active' : ''}"
-      loading="lazy" onclick="goToSlide(${i})" />`
+      loading="lazy" onclick="goToSlide(${i})"
+      onerror="this.style.display='none'" />`
   ).join('');
 
   document.getElementById('allPhotosTitle').style.display = 'block';
@@ -741,11 +705,27 @@ function buildGallery(l, goodSrcs) {
       <img src="${src}" alt="" loading="lazy"
         style="width:100%;height:100%;object-fit:cover;transition:transform .3s"
         onmouseover="this.style.transform='scale(1.05)'"
-        onmouseout="this.style.transform='scale(1)'" />
+        onmouseout="this.style.transform='scale(1)'"
+        onerror="this.parentElement.style.display='none'" />
     </div>`
   ).join('');
 
   updateHeroCount();
+}
+
+function onTrackImgError(img) {
+  // Remove the failed slide and update heroImgs to stay in sync
+  const trackImgs = Array.from(document.getElementById('heroTrack').querySelectorAll('img'));
+  const idx = trackImgs.indexOf(img);
+  if (idx !== -1) heroImgs.splice(idx, 1);
+  img.remove();
+  if (heroImgs.length === 0) {
+    showPlaceholder();
+  } else {
+    heroI = Math.min(heroI, heroImgs.length - 1);
+    goToSlide(heroI);
+    updateHeroCount();
+  }
 }
 
 function showPlaceholder() {
