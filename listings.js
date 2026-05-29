@@ -34,14 +34,9 @@ const listingsData = [
     laundry: 'On-site laundry',
     pets: 'No pets',
     images: [
-      'https://madsenpropertymgmt.com/public/uploads/1120_Esplanade-_Street_View_(1).JPG',
-      'https://madsenpropertymgmt.com/public/uploads/1120_Esplanade-_Street_View_(2).JPG',
-      'https://madsenpropertymgmt.com/public/uploads/1120_Esplanade_15-_June_1_2020_(7).JPG',
-      'https://madsenpropertymgmt.com/public/uploads/1120_Esplanade_15-_June_1_2020_(8).JPG',
-      'https://madsenpropertymgmt.com/public/uploads/1120_Esplanade_15-_June_1_2020_(6).JPG',
-      'https://madsenpropertymgmt.com/public/uploads/1120_Esplanade_15-_June_1_2020_(3).JPG',
-      'https://madsenpropertymgmt.com/public/uploads/1120_Esplanade_15-_June_1_2020_(4).JPG',
-      'https://madsenpropertymgmt.com/public/uploads/1120_Esplanade_15-_June_1_2020_(9).JPG'
+      'https://cdn.jsdelivr.net/gh/Hcordova2018/Madsen-site@main/images/1120-esplanade-15--june-1-2020-deify5.jpg',
+      'https://cdn.jsdelivr.net/gh/Hcordova2018/Madsen-site@main/images/1120-esplanade--street-view--1-h7mab4.jpg',
+      'https://cdn.jsdelivr.net/gh/Hcordova2018/Madsen-site@main/images/1120-esplanade--street-view--2-ouj0v9.jpg'
     ],
     tag: 'chico',
   },
