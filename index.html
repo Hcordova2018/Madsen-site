@@ -143,9 +143,9 @@
     </div>
     <div class="header-right">
       <div class="portal-links">
-        <a href="https://madsenpropertieschico.managebuilding.com/Resident/PublicPages/Home.aspx" target="_blank" rel="noopener">Tenant Sign-In</a>
+        <a href="https://madsenpropertieschico.managebuilding.com/Resident/PublicPages/Home.aspx" target="_blank" rel="noopener noreferrer">Tenant Sign-In</a>
         <span>|</span>
-        <a href="https://madsenpropertieschico.managebuilding.com/Manager/PublicPages/Login.aspx" target="_blank" rel="noopener">Owner Login</a>
+        <a href="https://madsenpropertieschico.managebuilding.com/Manager/PublicPages/Login.aspx" target="_blank" rel="noopener noreferrer">Owner Login</a>
       </div>
       <nav aria-label="Main navigation">
         <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="navList" aria-label="Toggle menu">
@@ -251,7 +251,7 @@
       </div>
     </div>
     <div style="text-align:center;margin-top:28px;">
-      <a href="https://www.google.com/search?q=Madsen+Properties+Chico+reviews" target="_blank" rel="noopener" style="font-size:14px;color:#bc5d1f;font-weight:600;text-decoration:none;">See all reviews on Google →</a>
+      <a href="https://www.google.com/search?q=Madsen+Properties+Chico+reviews" target="_blank" rel="noopener noreferrer" style="font-size:14px;color:#bc5d1f;font-weight:600;text-decoration:none;">See all reviews on Google →</a>
     </div>
   </div>
 </section>
@@ -397,8 +397,8 @@
           </div>
 
           <div style="margin-top:22px;display:flex;gap:10px;flex-wrap:wrap;">
-            <a href="https://madsenpropertieschico.managebuilding.com/Resident/PublicPages/Home.aspx" target="_blank" rel="noopener" class="btn-apply">Tenant Portal</a>
-            <a href="https://madsenpropertieschico.managebuilding.com/Manager/PublicPages/Login.aspx" target="_blank" rel="noopener" class="btn-outline">Owner Login</a>
+            <a href="https://madsenpropertieschico.managebuilding.com/Resident/PublicPages/Home.aspx" target="_blank" rel="noopener noreferrer" class="btn-apply">Tenant Portal</a>
+            <a href="https://madsenpropertieschico.managebuilding.com/Manager/PublicPages/Login.aspx" target="_blank" rel="noopener noreferrer" class="btn-outline">Owner Login</a>
           </div>
 
           <div style="margin-top:20px;padding:14px 16px;background:#f7f7f7;border-radius:8px;font-size:13px;color:#6f6f6f;font-weight:300;line-height:1.6;">
@@ -413,26 +413,26 @@
             <div class="form-row">
               <div class="form-group">
                 <label for="fname">First Name</label>
-                <input id="fname" type="text" placeholder="Jane" required autocomplete="given-name" />
+                <input id="fname" name="fname" type="text" placeholder="Jane" required autocomplete="given-name" />
               </div>
               <div class="form-group">
                 <label for="lname">Last Name</label>
-                <input id="lname" type="text" placeholder="Smith" required autocomplete="family-name" />
+                <input id="lname" name="lname" type="text" placeholder="Smith" required autocomplete="family-name" />
               </div>
             </div>
             <div class="form-row">
               <div class="form-group">
                 <label for="email">Email</label>
-                <input id="email" type="email" placeholder="jane@email.com" required autocomplete="email" />
+                <input id="email" name="email" type="email" placeholder="jane@email.com" required autocomplete="email" />
               </div>
               <div class="form-group">
                 <label for="phone">Phone</label>
-                <input id="phone" type="tel" placeholder="(530) 555-0000" autocomplete="tel" />
+                <input id="phone" name="phone" type="tel" placeholder="(530) 555-0000" autocomplete="tel" />
               </div>
             </div>
             <div class="form-group">
               <label for="role">I am a…</label>
-              <select id="role">
+              <select id="role" name="role">
                 <option>Prospective Tenant</option>
                 <option>Current Tenant</option>
                 <option>Property Owner — Interested in Management</option>
@@ -442,7 +442,7 @@
             </div>
             <div class="form-group">
               <label for="interest">I'm interested in…</label>
-              <select id="interest">
+              <select id="interest" name="interest">
                 <option>Viewing a rental property</option>
                 <option>Applying for a rental</option>
                 <option>Property management services</option>
@@ -452,7 +452,7 @@
             </div>
             <div class="form-group">
               <label for="message">Message</label>
-              <textarea id="message" placeholder="Tell us how we can help — include any property address, timeline, or details that would be useful…"></textarea>
+              <textarea id="message" name="message" placeholder="Tell us how we can help — include any property address, timeline, or details that would be useful…"></textarea>
             </div>
             <button type="submit" class="btn-submit">Send Message</button>
             <div class="form-success" id="formSuccess">✓ Thanks! We'll be in touch within 1 business day.</div>
@@ -473,10 +473,10 @@
         <img src="https://madsenpropertymgmt.com/public/uploads/logo.png" alt="Madsen Properties" />
         <p>Award-winning property management serving Northern California. Voted CN&amp;R Best Property Management 2022 &amp; 2023.</p>
         <div style="display:flex;gap:8px;margin-top:14px;">
-          <a href="https://www.facebook.com/madsenpropertieschico" target="_blank" rel="noopener" aria-label="Facebook" style="display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:#ebebeb;color:#666;transition:background .18s,color .18s;text-decoration:none;" onmouseover="this.style.background='#bc5d1f';this.style.color='#fff'" onmouseout="this.style.background='#ebebeb';this.style.color='#666'">
+          <a href="https://www.facebook.com/madsenpropertieschico" target="_blank" rel="noopener noreferrer" aria-label="Facebook" style="display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:#ebebeb;color:#666;transition:background .18s,color .18s;text-decoration:none;" onmouseover="this.style.background='#bc5d1f';this.style.color='#fff'" onmouseout="this.style.background='#ebebeb';this.style.color='#666'">
             <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
           </a>
-          <a href="https://www.instagram.com/madsen_properties/" target="_blank" rel="noopener" aria-label="Instagram" style="display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:#ebebeb;color:#666;transition:background .18s,color .18s;text-decoration:none;" onmouseover="this.style.background='#bc5d1f';this.style.color='#fff'" onmouseout="this.style.background='#ebebeb';this.style.color='#666'">
+          <a href="https://www.instagram.com/madsen_properties/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" style="display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:#ebebeb;color:#666;transition:background .18s,color .18s;text-decoration:none;" onmouseover="this.style.background='#bc5d1f';this.style.color='#fff'" onmouseout="this.style.background='#ebebeb';this.style.color='#666'">
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
           </a>
         </div>
@@ -500,8 +500,8 @@
       <div>
         <h4>Portals</h4>
         <ul>
-          <li><a href="https://madsenpropertieschico.managebuilding.com/Resident/PublicPages/Home.aspx" target="_blank" rel="noopener">Tenant Sign-In</a></li>
-          <li><a href="https://madsenpropertieschico.managebuilding.com/Manager/PublicPages/Login.aspx" target="_blank" rel="noopener">Owner Login</a></li>
+          <li><a href="https://madsenpropertieschico.managebuilding.com/Resident/PublicPages/Home.aspx" target="_blank" rel="noopener noreferrer">Tenant Sign-In</a></li>
+          <li><a href="https://madsenpropertieschico.managebuilding.com/Manager/PublicPages/Login.aspx" target="_blank" rel="noopener noreferrer">Owner Login</a></li>
           <li><a href="apply.html">Online Application</a></li>
         </ul>
         <h4 style="margin-top:18px;">Service Area</h4>
@@ -509,7 +509,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>&copy; 2026 Madsen Properties. All rights reserved.</p>
+      <p>&copy; 2025 Madsen Properties. All rights reserved.</p>
       <p>Serving Northern California</p>
     </div>
   </div>

@@ -60,7 +60,7 @@ function renderCard(l) {
         <div class="card-avail">Available: <strong>${l.available}</strong></div>
         <div class="card-actions">
           <a href="listing.html?id=${l.id}" class="btn-outline">View Details</a>
-          <a href="https://madsenpropertymgmt.com/apply/" target="_blank" rel="noopener" class="btn-apply">Apply Now</a>
+          <a href="apply.html" class="btn-apply">Apply Now</a>
         </div>
       </div>
     </div>

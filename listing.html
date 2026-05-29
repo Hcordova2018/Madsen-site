@@ -335,9 +335,9 @@
     </div>
     <div class="header-right">
       <div class="portal-links">
-        <a href="https://madsenpropertieschico.managebuilding.com/Resident/PublicPages/Home.aspx" target="_blank" rel="noopener">Tenant Sign-In</a>
+        <a href="https://madsenpropertieschico.managebuilding.com/Resident/PublicPages/Home.aspx" target="_blank" rel="noopener noreferrer">Tenant Sign-In</a>
         <span>|</span>
-        <a href="https://madsenpropertieschico.managebuilding.com/Manager/PublicPages/Login.aspx" target="_blank" rel="noopener">Owner Login</a>
+        <a href="https://madsenpropertieschico.managebuilding.com/Manager/PublicPages/Login.aspx" target="_blank" rel="noopener noreferrer">Owner Login</a>
       </div>
       <nav aria-label="Main navigation">
         <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="navList" aria-label="Toggle menu">
@@ -469,10 +469,10 @@
       <div>
         <h4>Connect With Us</h4>
         <div class="fi-social">
-          <a href="https://www.facebook.com/madsenpropertieschico" target="_blank" rel="noopener" aria-label="Facebook" style="width:42px;height:42px;">
+          <a href="https://www.facebook.com/madsenpropertieschico" target="_blank" rel="noopener noreferrer" aria-label="Facebook" style="width:42px;height:42px;">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
           </a>
-          <a href="https://www.instagram.com/madsen_properties/" target="_blank" rel="noopener" aria-label="Instagram" style="width:42px;height:42px;">
+          <a href="https://www.instagram.com/madsen_properties/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" style="width:42px;height:42px;">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
           </a>
           <a href="mailto:team@madsenpropertymgmt.com" aria-label="Email" style="width:42px;height:42px;">
@@ -502,6 +502,10 @@ function handleMailSub(e, form) {
   form.style.display = "none";
   form.nextElementSibling.style.display = "block";
 }
+function bedLabel(b) {
+  return b === 0 ? 'Studio' : b + ' Bed' + (b > 1 ? 's' : '');
+}
+
 // ── Get listing id from URL ?id=X ──
 const params  = new URLSearchParams(window.location.search);
 const listingId = parseInt(params.get('id'));
@@ -537,10 +541,9 @@ function initPage(l) {
     `<span class="detail-status ${badgeCls}">${l.statusLabel}</span>`;
 
   // Meta row
-  const bedLabel = l.beds === 0 ? 'Studio' : l.beds + ' Bed' + (l.beds > 1 ? 's' : '');
   document.getElementById('detailMeta').innerHTML = `
     <div class="detail-meta-item"><div class="detail-meta-label">Rent</div><div class="detail-meta-val" style="color:#ab4000">${l.price}</div></div>
-    <div class="detail-meta-item"><div class="detail-meta-label">Beds</div><div class="detail-meta-val">${bedLabel}</div></div>
+    <div class="detail-meta-item"><div class="detail-meta-label">Beds</div><div class="detail-meta-val">${bedLabel(l.beds)}</div></div>
     <div class="detail-meta-item"><div class="detail-meta-label">Baths</div><div class="detail-meta-val">${l.baths}</div></div>
     <div class="detail-meta-item"><div class="detail-meta-label">Available</div><div class="detail-meta-val">${l.available}</div></div>
     ${l.yearBuilt ? `<div class="detail-meta-item"><div class="detail-meta-label">Year Built</div><div class="detail-meta-val">${l.yearBuilt}</div></div>` : ''}
@@ -555,7 +558,7 @@ function initPage(l) {
   document.getElementById('sidePrice').innerHTML = l.price + ' <span>/ month</span>';
   document.getElementById('sideAvail').textContent = 'Available: ' + l.available;
   document.getElementById('sideRows').innerHTML = `
-    <div class="sidebar-row"><span class="sidebar-row-label">Bedrooms</span><span class="sidebar-row-val">${bedLabel}</span></div>
+    <div class="sidebar-row"><span class="sidebar-row-label">Bedrooms</span><span class="sidebar-row-val">${bedLabel(l.beds)}</span></div>
     <div class="sidebar-row"><span class="sidebar-row-label">Bathrooms</span><span class="sidebar-row-val">${l.baths}</span></div>
     <div class="sidebar-row"><span class="sidebar-row-label">Status</span><span class="sidebar-row-val">${l.statusLabel}</span></div>
     ${l.yearBuilt ? `<div class="sidebar-row"><span class="sidebar-row-label">Year Built</span><span class="sidebar-row-val">${l.yearBuilt}</span></div>` : ''}
