@@ -358,6 +358,10 @@
           <label>Year Built (leave blank if unknown)</label>
           <input id="editYearBuilt" type="number" placeholder="1990" />
         </div>
+        <div class="form-group">
+          <label>Sq Ft (leave blank if unknown)</label>
+          <input id="editSqft" type="number" placeholder="1200" />
+        </div>
         <div class="form-group full">
           <label>Description</label>
           <textarea id="editDesc" placeholder="Describe the property… Use a blank line between paragraphs." style="min-height:120px;"></textarea>
@@ -373,6 +377,22 @@
         <div class="form-group">
           <label>Utilities</label>
           <input id="editUtilities" type="text" placeholder="e.g. Owner pays water/trash. Tenant pays PG&amp;E." />
+        </div>
+        <div class="form-group">
+          <label>Deposit</label>
+          <input id="editDeposit" type="text" placeholder="e.g. $1,250" />
+        </div>
+        <div class="form-group">
+          <label>Parking</label>
+          <input id="editParking" type="text" placeholder="e.g. 1 driveway space, Street parking" />
+        </div>
+        <div class="form-group">
+          <label>Laundry</label>
+          <input id="editLaundry" type="text" placeholder="e.g. In-unit laundry, On-site laundry" />
+        </div>
+        <div class="form-group">
+          <label>Pet Policy</label>
+          <input id="editPets" type="text" placeholder="e.g. No pets, Small dogs OK (under 25 lbs)" />
         </div>
       </div>
 
@@ -549,6 +569,11 @@ function openModal(id) {
   document.getElementById('editFeatures').value   = l?.features ? l.features.join('\n') : '';
   document.getElementById('editLeaseTerm').value  = l?.leaseTerms || '';
   document.getElementById('editUtilities').value  = l?.utilities || '';
+  document.getElementById('editSqft').value       = l?.sqft || '';
+  document.getElementById('editDeposit').value    = l?.deposit || '';
+  document.getElementById('editParking').value    = l?.parking || '';
+  document.getElementById('editLaundry').value    = l?.laundry || '';
+  document.getElementById('editPets').value       = l?.pets || '';
 
   // Images
   const imgs = l?.images || [''];
@@ -689,10 +714,15 @@ function saveListing() {
     available:   availDisplay,
     availDate:   availDateRaw,
     yearBuilt:   document.getElementById('editYearBuilt').value ? parseInt(document.getElementById('editYearBuilt').value) : null,
+    sqft:        document.getElementById('editSqft').value ? parseInt(document.getElementById('editSqft').value) : null,
     desc:        document.getElementById('editDesc').value.trim(),
     features:    document.getElementById('editFeatures').value.trim() ? document.getElementById('editFeatures').value.trim().split('\n').map(f => f.trim()).filter(Boolean) : [],
     leaseTerms:  document.getElementById('editLeaseTerm').value.trim() || null,
     utilities:   document.getElementById('editUtilities').value.trim() || null,
+    deposit:     document.getElementById('editDeposit').value.trim() || null,
+    parking:     document.getElementById('editParking').value.trim() || null,
+    laundry:     document.getElementById('editLaundry').value.trim() || null,
+    pets:        document.getElementById('editPets').value.trim() || null,
     images,
     tag:         document.getElementById('editTag').value,
   };
@@ -805,10 +835,15 @@ const listingsData = [\n`;
     available:   '${esc(l.available)}',
     availDate:   '${l.availDate}',
     yearBuilt:   ${l.yearBuilt || null},
+    ${l.sqft ? `sqft: ${l.sqft},` : ''}
     desc: '${esc(l.desc)}',
     ${l.features && l.features.length > 0 ? `features: [${l.features.map(f => `'${esc(f)}'`).join(', ')}],` : ''}
     ${l.leaseTerms ? `leaseTerms: '${esc(l.leaseTerms)}',` : ''}
     ${l.utilities ? `utilities: '${esc(l.utilities)}',` : ''}
+    ${l.deposit ? `deposit: '${esc(l.deposit)}',` : ''}
+    ${l.parking ? `parking: '${esc(l.parking)}',` : ''}
+    ${l.laundry ? `laundry: '${esc(l.laundry)}',` : ''}
+    ${l.pets ? `pets: '${esc(l.pets)}',` : ''}
     images: [\n${imgs}\n    ],
     tag: '${l.tag}',
   }`;
