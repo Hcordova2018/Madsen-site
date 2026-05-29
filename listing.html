@@ -673,65 +673,79 @@ function initPage(l) {
 // ── Photo hero ──
 let heroI = 0;
 let heroImgs = [];
-let loadedCount = 0;
+let pendingImgs = 0;
+let resolvedImgs = [];
 
 function initPhotos(l) {
-  heroImgs = l.images;
-  loadedCount = 0;
+  const allSrcs = l.images || [];
+  heroImgs = [];
+  resolvedImgs = [];
+  heroI = 0;
 
   const track = document.getElementById('heroTrack');
   const rail  = document.getElementById('heroRail');
   const grid  = document.getElementById('detailPhotoGrid');
 
-  // Render all images immediately — track which ones actually load
+  if (allSrcs.length === 0) { showPlaceholder(); return; }
+
+  // Probe all images first using Image() objects — only render ones that load
+  pendingImgs = allSrcs.length;
+  resolvedImgs = new Array(allSrcs.length).fill(null);
+
+  allSrcs.forEach((src, i) => {
+    const img = new Image();
+    img.onload = () => {
+      resolvedImgs[i] = src;
+      pendingImgs--;
+      if (pendingImgs === 0) buildGallery(l, resolvedImgs.filter(Boolean));
+    };
+    img.onerror = () => {
+      resolvedImgs[i] = null;
+      pendingImgs--;
+      if (pendingImgs === 0) buildGallery(l, resolvedImgs.filter(Boolean));
+    };
+    img.src = src;
+  });
+
+  // Fallback: if nothing resolves in 4s, show placeholder
+  setTimeout(() => {
+    if (heroImgs.length === 0) showPlaceholder();
+  }, 4000);
+}
+
+function buildGallery(l, goodSrcs) {
+  heroImgs = goodSrcs;
+  heroI = 0;
+
+  const track = document.getElementById('heroTrack');
+  const rail  = document.getElementById('heroRail');
+  const grid  = document.getElementById('detailPhotoGrid');
+
+  if (heroImgs.length === 0) { showPlaceholder(); return; }
+
   track.innerHTML = heroImgs.map((src, i) =>
     `<img src="${src}" alt="${l.address} — photo ${i+1}"
-      loading="${i === 0 ? 'eager' : 'lazy'}"
-      onload="onHeroImgLoad()"
-      onerror="this.parentElement.removeChild(this); onHeroImgError();" />`
+      loading="${i === 0 ? 'eager' : 'lazy'}" />`
   ).join('');
 
   rail.innerHTML = heroImgs.map((src, i) =>
     `<img src="${src}" alt="" class="${i === 0 ? 'active' : ''}"
-      loading="lazy" onclick="goToSlide(${i})"
-      onerror="this.style.display='none'" />`
+      loading="lazy" onclick="goToSlide(${i})" />`
   ).join('');
 
-  if (heroImgs.length > 0) {
-    document.getElementById('allPhotosTitle').style.display = 'block';
-    grid.style.display = 'grid';
-  }
+  document.getElementById('allPhotosTitle').style.display = 'block';
+  grid.style.display = 'grid';
   grid.innerHTML = heroImgs.map((src, i) =>
     `<div style="aspect-ratio:4/3;overflow:hidden;border-radius:6px;cursor:zoom-in;border:1px solid #eee;"
       onclick="openLb(${i})">
       <img src="${src}" alt="" loading="lazy"
         style="width:100%;height:100%;object-fit:cover;transition:transform .3s"
         onmouseover="this.style.transform='scale(1.05)'"
-        onmouseout="this.style.transform='scale(1)'"
-        onerror="this.parentElement.style.display='none'" />
+        onmouseout="this.style.transform='scale(1)'" />
     </div>`
   ).join('');
 
-  // Initial count
   updateHeroCount();
-
-  // If after 1.5s nothing loaded, show placeholder
-  setTimeout(() => {
-    const trackImgs = track.querySelectorAll('img');
-    if (trackImgs.length === 0) showPlaceholder();
-  }, 1500);
-}
-
-function onHeroImgLoad() {
-  loadedCount++;
-  updateHeroCount();
-}
-
-function onHeroImgError() {
-  // Recount remaining images in track and update
-  const remaining = document.getElementById('heroTrack').querySelectorAll('img').length;
-  if (remaining === 0) showPlaceholder();
-  else updateHeroCount();
 }
 
 function showPlaceholder() {
