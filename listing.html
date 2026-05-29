@@ -165,7 +165,7 @@
     .detail-meta-row {
       display: flex;
       gap: 0;
-      flex-wrap: wrap;
+      flew-wrap: wrap;
       padding: 0;
       border: 1px solid #ececec;
       border-radius: 10px;
@@ -680,7 +680,10 @@ function initPhotos(l) {
   try { stored = JSON.parse(localStorage.getItem('uploads_' + l.id) || '[]'); } catch(e) {}
 
   // Deduplicate: stored first (admin uploads), then any hardcoded fallbacks from listings.js
-  const hardcoded = (l._rawImages || []);
+  // l._rawImages holds hardcoded CDN images; fall back to l.images getter if not present
+  const hardcoded = (l._rawImages || []).length > 0 ? (l._rawImages || []) : (() => {
+    try { const all = l.images || []; const s = new Set(stored); return all.filter(u => !s.has(u)); } catch(e) { return []; }
+  })();
   const seen = new Set(stored);
   const fallback = hardcoded.filter(s => !seen.has(s));
   heroImgs = [...stored, ...fallback];
