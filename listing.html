@@ -675,7 +675,15 @@ let heroI = 0;
 let heroImgs = [];
 
 function initPhotos(l) {
-  heroImgs = (l.images || []).slice();
+  // Read directly from localStorage — same source as admin dashboard uploads
+  let stored = [];
+  try { stored = JSON.parse(localStorage.getItem('uploads_' + l.id) || '[]'); } catch(e) {}
+
+  // Deduplicate: stored first (admin uploads), then any hardcoded fallbacks from listings.js
+  const hardcoded = (l._rawImages || []);
+  const seen = new Set(stored);
+  const fallback = hardcoded.filter(s => !seen.has(s));
+  heroImgs = [...stored, ...fallback];
   heroI = 0;
 
   const track = document.getElementById('heroTrack');

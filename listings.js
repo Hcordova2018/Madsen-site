@@ -1,369 +1,427 @@
-// =============================================================
-//  Madsen Properties — LISTINGS DATA
-//  Last updated via admin dashboard: 5/28/2026
+// ================================================================
+//  MADSEN PROPERTIES — LISTINGS FILE
+//  ----------------------------------------------------------------
+//  HOW TO EDIT THIS FILE:
 //
-//  TO EDIT: Use the Admin Dashboard at admin-dashboard.html
-//  Or edit manually — see comments below for field reference.
-// =============================================================
+//  1. Go to your GitHub repo in your browser
+//  2. Click this file (listings.js)
+//  3. Click the pencil ✏️ icon (top right of the file)
+//  4. Make your changes below
+//  5. Scroll down, click "Commit changes" — site updates in ~30 sec
+//
+//  ----------------------------------------------------------------
+//  COMMON TASKS:
+//
+//  ▸ Change a price:
+//      Find the listing, change priceNum AND price to match
+//      Example:  priceNum: 1250,  price: '$1,250/mo',
+//
+//  ▸ Change availability date:
+//      Update both available AND availDate
+//      Example:  available: 'August 01, 2026',  availDate: '2026-08-01',
+//
+//  ▸ Mark a unit as rented / taken:
+//      Change status to 'approved'
+//      Change statusLabel to 'Approved Applicant'
+//
+//  ▸ Make a unit available now:
+//      Change status to 'available'
+//      Change statusLabel to 'Available Now'
+//
+//  ▸ Remove a listing entirely:
+//      Delete everything from the opening { to the closing },
+//      including both curly braces
+//
+//  ▸ Add a new listing:
+//      Copy an existing listing block (from { to },)
+//      Paste it at the END of the list (before the ];)
+//      Change the id to the next number
+//      Fill in all the details
+//
+//  ▸ Add or change photos:
+//      Replace the URLs in the images: [ ... ] section
+//      Each URL goes on its own line, inside single quotes,
+//      followed by a comma
+//
+//  ----------------------------------------------------------------
+//  STATUS OPTIONS (copy exactly including the quotes):
+//    'available'  → shows green "Available Now" badge
+//    'soon'       → shows amber "Coming Soon" badge
+//    'approved'   → shows gray "Approved Applicant" badge
+//
+//  CITY TAG OPTIONS (used for the filter buttons):
+//    'chico'
+//    'oroville'
+//    'paradise'
+// ================================================================
 
+// ── DO NOT EDIT BELOW THIS LINE ──
 function getUploads(id) {
   try { return JSON.parse(localStorage.getItem('uploads_' + id) || '[]'); } catch(e) { return []; }
 }
+// ── END DO NOT EDIT ──
 
+
+// ================================================================
+//  LISTINGS — Edit anything between the [ and ];
+// ================================================================
 const listingsData = [
+
+  // ── LISTING 1 ──────────────────────────────────────────────────
   {
-    id:          1,
+    id: 1,
     address:     '1120 Esplanade #15',
     city:        'Chico, California 95926',
-    price:       '$1,250/mo',
-    priceNum:    1250,
+    price:       '$1,250/mo',          // Display price (shown on site)
+    priceNum:    1250,                 // Price as a number (used for sorting)
     beds:        2,
     baths:       1,
-    status:      'soon',
-    statusLabel: 'Coming Soon',
-    available:   'June 01, 2026',
-    availDate:   '2026-06-01',
-    yearBuilt:   null,
-    
+    sqft:        null,                 // Square footage or null if unknown
+    deposit:     '$1,250',            // Security deposit or null
+    parking:     'Street parking',    // Parking details or null
+    laundry:     'On-site laundry',   // Laundry details or null
+    pets:        'No pets',           // Pet policy or null
+    status:      'soon',              // 'available' | 'soon' | 'approved'
+    statusLabel: 'Coming Soon',       // Text shown on the badge
+    available:   'June 01, 2026',     // Human-readable date
+    availDate:   '2026-06-01',        // Machine date YYYY-MM-DD (for sorting)
+    yearBuilt:   null,                // Year or null if unknown
+    features:    ['Central A/C & Heat', 'Large Bedrooms', 'Energy Efficient', 'Close to Downtown', 'Upstairs Unit'],
     desc: 'Live at Royal Arms on the Esplanade. Spacious 2 bed/1 bath upstairs apartment close to downtown. Large bedrooms, central air/heat, energy efficient features.',
-    features: ['Central A/C & Heat', 'Large Bedrooms', 'Energy Efficient', 'Close to Downtown', 'Upstairs Unit'],
-    
-    
-    deposit: '$1,250',
-    parking: 'Street parking',
-    laundry: 'On-site laundry',
-    pets: 'No pets',
     images: [
-      'https://cdn.jsdelivr.net/gh/Hcordova2018/Madsen-site@main/images/1120-esplanade-15--june-1-2020-deify5.jpg',
-      'https://cdn.jsdelivr.net/gh/Hcordova2018/Madsen-site@main/images/1120-esplanade--street-view--1-h7mab4.jpg',
-      'https://cdn.jsdelivr.net/gh/Hcordova2018/Madsen-site@main/images/1120-esplanade--street-view--2-ouj0v9.jpg'
+      'https://madsenpropertymgmt.com/public/uploads/1120_Esplanade-_Street_View_(1).JPG',
+      'https://madsenpropertymgmt.com/public/uploads/1120_Esplanade-_Street_View_(2).JPG',
+      'https://madsenpropertymgmt.com/public/uploads/1120_Esplanade_15-_June_1_2020_(7).JPG',
+      'https://madsenpropertymgmt.com/public/uploads/1120_Esplanade_15-_June_1_2020_(8).JPG',
+      'https://madsenpropertymgmt.com/public/uploads/1120_Esplanade_15-_June_1_2020_(6).JPG',
+      'https://madsenpropertymgmt.com/public/uploads/1120_Esplanade_15-_June_1_2020_(3).JPG',
+      'https://madsenpropertymgmt.com/public/uploads/1120_Esplanade_15-_June_1_2020_(4).JPG',
+      'https://madsenpropertymgmt.com/public/uploads/1120_Esplanade_15-_June_1_2020_(9).JPG',
     ],
     tag: 'chico',
   },
 
+  // ── LISTING 2 ──────────────────────────────────────────────────
   {
-    id:          2,
+    id: 2,
     address:     '1343 Laburnum Ave - C',
     city:        'Chico, California 95926',
     price:       '$850/mo',
     priceNum:    850,
     beds:        1,
     baths:       1,
+    sqft:        null,
+    deposit:     '$850',
+    parking:     'Street parking',
+    laundry:     null,
+    pets:        'No pets, no interior smoking',
     status:      'approved',
     statusLabel: 'Approved Applicant',
     available:   'May 15, 2026',
     availDate:   '2026-05-15',
     yearBuilt:   1930,
-    
+    features:    ['Hardwood Floors', 'Gas Range', 'Refrigerator Included', 'Trash/Water/Sewer Paid', 'Light & Bright'],
     desc: 'Light and bright 1 bed/1 bath apartment. Hardwood floors, gas range and refrigerator. Trash, water and sewer paid. No pets, no interior smoking.',
-    features: ['Hardwood Floors', 'Gas Range', 'Refrigerator Included', 'Trash/Water/Sewer Paid', 'Light & Bright'],
-    
-    
-    deposit: '$850',
-    parking: 'Street parking',
-    
-    pets: 'No pets, no interior smoking',
     images: [
       'https://madsenpropertymgmt.com/public/uploads/1343_Laburnum_Ave.jpeg',
       'https://madsenpropertymgmt.com/public/uploads/1343_Laburnum_Ave_-_C_(5).JPEG',
       'https://madsenpropertymgmt.com/public/uploads/1343_Laburnum_Ave_-_C_(6).JPEG',
-      'https://madsenpropertymgmt.com/public/uploads/1343_Laburnum_Ave_-_C_(8).JPEG'
+      'https://madsenpropertymgmt.com/public/uploads/1343_Laburnum_Ave_-_C_(8).JPEG',
     ],
     tag: 'chico',
   },
 
+  // ── LISTING 3 ──────────────────────────────────────────────────
   {
-    id:          3,
+    id: 3,
     address:     '1340 W 4th Street #4',
     city:        'Chico, California 95928',
     price:       '$1,850/mo',
     priceNum:    1850,
     beds:        4,
     baths:       2,
+    sqft:        null,
+    deposit:     '$1,850',
+    parking:     'Street parking',
+    laundry:     'On-site laundry',
+    pets:        null,
     status:      'soon',
     statusLabel: 'Coming Soon',
     available:   'June 15, 2026',
     availDate:   '2026-06-15',
     yearBuilt:   1991,
-    
+    features:    ['Granite Countertops', 'Central A/C', 'Walk to Downtown', 'Walk to Chico State', 'Upstairs Unit', 'On-site Laundry'],
     desc: 'Upstairs 4-bed/2-bath apartment within walking distance to downtown Chico, CSUC main campus and restaurants. Granite countertops, central A/C.',
-    features: ['Granite Countertops', 'Central A/C', 'Walk to Downtown', 'Walk to Chico State', 'Upstairs Unit', 'On-site Laundry'],
-    
-    
-    deposit: '$1,850',
-    parking: 'Street parking',
-    laundry: 'On-site laundry',
-    
     images: [
       'https://madsenpropertymgmt.com/public/uploads/IMG_0574-(W)_(1).jpg',
-      'https://madsenpropertymgmt.com/public/uploads/1340_W_4th_Street__4-Before_Cleaning_Sept_11_2022_(1).jpg'
+      'https://madsenpropertymgmt.com/public/uploads/1340_W_4th_Street__4-Before_Cleaning_Sept_11_2022_(1).jpg',
     ],
     tag: 'chico',
   },
 
+  // ── LISTING 4 ──────────────────────────────────────────────────
   {
-    id:          4,
+    id: 4,
     address:     '1308 Kentfield Road',
     city:        'Chico, California 95926',
     price:       '$3,500/mo',
     priceNum:    3500,
     beds:        4,
     baths:       2.5,
+    sqft:        2000,
+    deposit:     '$3,500',
+    parking:     'Garage + driveway',
+    laundry:     'In-unit laundry',
+    pets:        null,
     status:      'soon',
     statusLabel: 'Coming Soon',
     available:   'July 01, 2026',
     availDate:   '2026-07-01',
     yearBuilt:   null,
-    sqft: 2000,
+    features:    ['Ranch Style', 'Over 2,000 Sq Ft', 'Great Outdoor Space', 'Garage + Driveway', 'In-unit Laundry', 'Near Hwy 99'],
     desc: 'Amazing ranch-style living near Hwy 99! Over 2,000 sq. ft., 4 bed/2.5 bath beautifully updated with great outdoor space.',
-    features: ['Ranch Style', 'Over 2,000 Sq Ft', 'Great Outdoor Space', 'Garage + Driveway', 'In-unit Laundry', 'Near Hwy 99'],
-    
-    
-    deposit: '$3,500',
-    parking: 'Garage + driveway',
-    laundry: 'In-unit laundry',
-    
     images: [
       'https://madsenpropertymgmt.com/public/uploads/1308_Kentfield-_May_22_2023_(6).JPEG',
-      'https://madsenpropertymgmt.com/public/uploads/1308_Kentfield-_May_22_2023_(7).JPEG'
+      'https://madsenpropertymgmt.com/public/uploads/1308_Kentfield-_May_22_2023_(7).JPEG',
     ],
     tag: 'chico',
   },
 
+  // ── LISTING 5 ──────────────────────────────────────────────────
   {
-    id:          5,
+    id: 5,
     address:     '15451 Cana Pine Creek',
     city:        'Chico, California 95973',
     price:       '$1,900/mo',
     priceNum:    1900,
     beds:        3,
     baths:       2.5,
+    sqft:        1876,
+    deposit:     '$1,900',
+    parking:     'Driveway',
+    laundry:     'In-unit laundry hookups',
+    pets:        null,
     status:      'soon',
     statusLabel: 'Coming Soon',
     available:   'June 15, 2026',
     availDate:   '2026-06-15',
     yearBuilt:   2002,
-    sqft: 1876,
+    features:    ['Dual Pane Windows', 'Fenced Backyard', 'Gas Range', 'Large Kitchen', 'Refrigerator Included', 'Open-concept Layout', '1,876 Sq Ft', 'Country Setting'],
     desc: 'Welcome home to relaxed country living in this charming 3-bedroom, 2-bath, 1,876 sq. ft. manufactured home, just a convenient 10-minute drive from North Chico. Built in 2002, this well-designed residence offers an inviting open-concept layout that\'s perfect for everyday living and entertaining.',
-    features: ['Dual Pane Windows', 'Fenced Backyard', 'Gas Range', 'Large Kitchen', 'Refrigerator Included', 'Open-concept Layout', '1,876 Sq Ft', 'Country Setting'],
-    
-    
-    deposit: '$1,900',
-    parking: 'Driveway',
-    laundry: 'In-unit laundry hookups',
-    
     images: [
       'https://madsenpropertymgmt.com/public/uploads/Photo_Dec_21_2023__10_39_21_AM.jpg',
-      'https://madsenpropertymgmt.com/public/uploads/Photo_Dec_21_2023__10_39_33_AM.jpg'
+      'https://madsenpropertymgmt.com/public/uploads/Photo_Dec_21_2023__10_39_33_AM.jpg',
     ],
     tag: 'chico',
   },
 
+  // ── LISTING 6 ──────────────────────────────────────────────────
   {
-    id:          6,
+    id: 6,
     address:     '910 Sequoyah Ave',
     city:        'Chico, California 95926',
     price:       '$2,800/mo',
     priceNum:    2800,
     beds:        5,
     baths:       2,
+    sqft:        null,
+    deposit:     '$2,800',
+    parking:     'Driveway',
+    laundry:     'In-unit laundry hookups',
+    pets:        null,
     status:      'soon',
     statusLabel: 'Coming Soon',
     available:   'June 15, 2026',
     availDate:   '2026-06-15',
     yearBuilt:   1973,
-    
+    features:    ['Fireplace', 'Brand New Carpet', 'Living Room', 'Driveway Parking', 'In-unit Laundry Hookups', 'Large Home'],
     desc: 'Beautiful 5-bed/2-bath home with living room, fireplace, and brand new carpet throughout. Great Chico neighborhood.',
-    features: ['Fireplace', 'Brand New Carpet', 'Living Room', 'Driveway Parking', 'In-unit Laundry Hookups', 'Large Home'],
-    
-    
-    deposit: '$2,800',
-    parking: 'Driveway',
-    laundry: 'In-unit laundry hookups',
-    
     images: [
       'https://madsenpropertymgmt.com/public/uploads/1_-_910_Main_Front.jpg',
-      'https://madsenpropertymgmt.com/public/uploads/2_-_910_Front.jpg'
+      'https://madsenpropertymgmt.com/public/uploads/2_-_910_Front.jpg',
     ],
     tag: 'chico',
   },
 
+  // ── LISTING 7 ──────────────────────────────────────────────────
   {
-    id:          7,
+    id: 7,
     address:     '1481 Montgomery St',
     city:        'Oroville, California 95965',
     price:       '$2,400/mo',
     priceNum:    2400,
     beds:        2,
     baths:       2,
+    sqft:        null,
+    deposit:     '$2,400',
+    parking:     '1 designated driveway space + street parking',
+    laundry:     null,
+    pets:        null,
     status:      'available',
     statusLabel: 'Available Now',
     available:   'April 01, 2026',
     availDate:   '2026-04-01',
     yearBuilt:   null,
-    
+    features:    ['Fully Furnished', 'Central A/C & Heat', 'Ceiling Fans', 'Stainless Steel Appliances', 'Cookware & Utensils Included', 'Faux Wood Blinds', 'Enclosed Backyard', 'BBQ Setup', 'Garden', 'WiFi Included', '1 Parking Space'],
+    leaseTerms:  '6-month lease',
+    utilities:   'Owner covers: landscaping, sewer, garbage, water (up to $150), and WiFi. Tenant pays: PG&E and water over $150.',
     desc: 'AVAILABLE NOW (Fully Furnished) — This exquisite 2-bedroom, 2-bath residence is situated in downtown Oroville. Impeccably presented, it places you at the center of the city\'s vibrant offerings, just steps away from outstanding dining options, essential amenities, and a lively entertainment scene.\n\nThis private retreat boasts an abundance of natural light and spaciousness. The open-concept living and dining area is thoughtfully designed to embrace light and airflow throughout the year.\n\nEach bedroom is inviting, featuring a full-sized bed, and the influx of natural light creates a soothing and comfortable atmosphere. The kitchen is equipped with modern, high-quality stainless steel appliances that enhance the cooking experience and simplify cleaning. It comes complete with necessary cookware and utensils.\n\nThe home is fitted with central heating and air conditioning, complemented by attractive faux wood blinds in every room. Each room is also equipped with ceiling fans and portable fans for added comfort.\n\nThe backyard is fully enclosed, providing a tranquil environment adorned with a lovely garden and a BBQ setup. One designated parking space in the driveway, plus available street parking.',
-    features: ['Fully Furnished', 'Central A/C & Heat', 'Ceiling Fans', 'Stainless Steel Appliances', 'Cookware & Utensils Included', 'Faux Wood Blinds', 'Enclosed Backyard', 'BBQ Setup', 'Garden', 'WiFi Included', '1 Parking Space'],
-    leaseTerms: '6-month lease',
-    utilities: 'Owner covers: landscaping, sewer, garbage, water (up to $150), and WiFi. Tenant pays: PG&E and water over $150.',
-    deposit: '$2,400',
-    parking: '1 designated driveway space + street parking',
-    
-    
     images: [
       'https://madsenpropertymgmt.com/public/uploads/11_-_1481_Montgomery_St.JPEG',
-      'https://madsenpropertymgmt.com/public/uploads/8_-_1481_Montgomery_St.JPEG'
+      'https://madsenpropertymgmt.com/public/uploads/8_-_1481_Montgomery_St.JPEG',
     ],
     tag: 'oroville',
   },
 
+  // ── LISTING 8 ──────────────────────────────────────────────────
   {
-    id:          8,
+    id: 8,
     address:     '180 E 1st Ave #8',
     city:        'Chico, California 95926',
     price:       '$1,150/mo',
     priceNum:    1150,
     beds:        2,
     baths:       1,
+    sqft:        null,
+    deposit:     '$1,150',
+    parking:     'Street parking',
+    laundry:     'On-site laundry',
+    pets:        null,
     status:      'available',
     statusLabel: 'Available Now',
     available:   'Nov 01, 2025',
     availDate:   '2025-11-01',
     yearBuilt:   null,
-    
+    features:    ['Walk to Chico State', 'Upstairs Unit', 'Central Location', 'On-site Laundry', 'Move-In Special'],
     desc: 'Move-In Special: 1st month FREE if lease signed before 5/31/2026. Centrally located 2-bed/1-bath upstairs apartment just blocks from Chico State.',
-    features: ['Walk to Chico State', 'Upstairs Unit', 'Central Location', 'On-site Laundry', 'Move-In Special'],
-    
-    
-    deposit: '$1,150',
-    parking: 'Street parking',
-    laundry: 'On-site laundry',
-    
     images: [
       'https://madsenpropertymgmt.com/public/uploads/180_E_1st_Ave__1-_Jan_2023_(9).jpg',
-      'https://madsenpropertymgmt.com/public/uploads/180_E_1st_Ave__1-_Jan_2023_(8).jpg'
+      'https://madsenpropertymgmt.com/public/uploads/180_E_1st_Ave__1-_Jan_2023_(8).jpg',
     ],
     tag: 'chico',
   },
 
+  // ── LISTING 9 ──────────────────────────────────────────────────
   {
-    id:          9,
+    id: 9,
     address:     '1115 E Ewald Ct #A',
     city:        'Paradise, California 95969',
     price:       '$1,800/mo',
     priceNum:    1800,
-    beds:        0,
+    beds:        0,                    // 0 = Studio
     baths:       2,
+    sqft:        null,
+    deposit:     '$1,800',
+    parking:     'On-site parking',
+    laundry:     null,
+    pets:        null,
     status:      'available',
     statusLabel: 'Available Now',
     available:   'Nov 07, 2025',
     availDate:   '2025-11-07',
     yearBuilt:   null,
-    
+    features:    ['Commercial Unit', 'On-site Parking', 'Move-In Special', 'Paradise Location'],
     desc: 'COMMERCIAL UNIT — Move-In Special: 1st month FREE if lease signed before 5/31/2026. Business use only in Paradise, CA.',
-    features: ['Commercial Unit', 'On-site Parking', 'Move-In Special', 'Paradise Location'],
-    
-    
-    deposit: '$1,800',
-    parking: 'On-site parking',
-    
-    
     images: [
       'https://madsenpropertymgmt.com/public/uploads/1115_E_Ewald_Ct_-_A_(3).jpg',
-      'https://madsenpropertymgmt.com/public/uploads/1115_E_Ewald_Ct_-_A_(6).jpg'
+      'https://madsenpropertymgmt.com/public/uploads/1115_E_Ewald_Ct_-_A_(6).jpg',
     ],
     tag: 'paradise',
   },
 
+  // ── LISTING 10 ─────────────────────────────────────────────────
   {
-    id:          10,
+    id: 10,
     address:     '2350 B Street',
     city:        'Oroville, California 95965',
     price:       '$1,250/mo',
     priceNum:    1250,
     beds:        2,
     baths:       1,
+    sqft:        null,
+    deposit:     '$1,250',
+    parking:     'Street parking',
+    laundry:     null,
+    pets:        null,
     status:      'available',
     statusLabel: 'Available Now',
     available:   'April 10, 2026',
     availDate:   '2026-04-10',
     yearBuilt:   null,
-    
+    features:    ['Cottage Style', 'Walk to Amenities', 'Character Home', 'Street Parking'],
     desc: 'Charming 2-bed/1-bath cottage in the heart of Oroville — comfort, convenience, and character. Walking distance to local amenities.',
-    features: ['Cottage Style', 'Walk to Amenities', 'Character Home', 'Street Parking'],
-    
-    
-    deposit: '$1,250',
-    parking: 'Street parking',
-    
-    
     images: [
       'https://madsenpropertymgmt.com/public/uploads/2350_B_St_(1).JPEG',
-      'https://madsenpropertymgmt.com/public/uploads/2350_B_St_(2).JPEG'
+      'https://madsenpropertymgmt.com/public/uploads/2350_B_St_(2).JPEG',
     ],
     tag: 'oroville',
   },
 
+  // ── LISTING 11 ─────────────────────────────────────────────────
   {
-    id:          11,
+    id: 11,
     address:     '205 W Lassen Ave #4',
     city:        'Chico, California 95973',
     price:       '$1,500/mo',
     priceNum:    1500,
     beds:        2,
     baths:       1,
+    sqft:        null,
+    deposit:     '$1,500',
+    parking:     'Off-street parking',
+    laundry:     null,
+    pets:        null,
     status:      'available',
     statusLabel: 'Available Now',
     available:   'May 01, 2026',
     availDate:   '2026-05-01',
     yearBuilt:   null,
-    
+    features:    ['Newly Renovated', 'New LVP Flooring', 'New Range & Hood', 'Large Backyard', 'Open Floor Plan', 'Garden-style Duplex'],
     desc: 'NEWLY RENOVATED 2-bed/1-bath garden-style duplex. New LVP flooring, new range and hood, large backyard, open floor plan.',
-    features: ['Newly Renovated', 'New LVP Flooring', 'New Range & Hood', 'Large Backyard', 'Open Floor Plan', 'Garden-style Duplex'],
-    
-    
-    deposit: '$1,500',
-    parking: 'Off-street parking',
-    
-    
     images: [
       'https://madsenpropertymgmt.com/public/uploads/205_W_Lassen_Ave__4_(1).jpg',
-      'https://madsenpropertymgmt.com/public/uploads/205_W_Lassen_Ave__4_(2).jpg'
+      'https://madsenpropertymgmt.com/public/uploads/205_W_Lassen_Ave__4_(2).jpg',
     ],
     tag: 'chico',
   },
 
+  // ── LISTING 12 ─────────────────────────────────────────────────
   {
-    id:          12,
+    id: 12,
     address:     '1872 5th Ave #9',
     city:        'Oroville, California 95965',
     price:       '$1,000/mo',
     priceNum:    1000,
     beds:        2,
     baths:       1,
+    sqft:        null,
+    deposit:     '$1,000',
+    parking:     'Off-street parking',
+    laundry:     'On-site laundry',
+    pets:        null,
     status:      'available',
     statusLabel: 'Available Now',
     available:   'April 20, 2026',
     availDate:   '2026-04-20',
     yearBuilt:   null,
-    
+    features:    ['Brand New Flooring', 'Fresh Paint', 'New Faux Blinds', 'Upstairs Unit', 'On-site Laundry'],
     desc: 'Delightful 2-bed/1-bath upstairs unit. Brand new laminate flooring, fresh paint, new faux blinds throughout.',
-    features: ['Brand New Flooring', 'Fresh Paint', 'New Faux Blinds', 'Upstairs Unit', 'On-site Laundry'],
-    
-    
-    deposit: '$1,000',
-    parking: 'Off-street parking',
-    laundry: 'On-site laundry',
-    
     images: [
       'https://madsenpropertymgmt.com/public/uploads/1872_5th_Ave__9_(1).jpg',
-      'https://madsenpropertymgmt.com/public/uploads/1872_5th_Ave__9_(2).jpg'
+      'https://madsenpropertymgmt.com/public/uploads/1872_5th_Ave__9_(2).jpg',
     ],
     tag: 'oroville',
-  }
-];
+  },
 
+  // ── ADD NEW LISTINGS ABOVE THIS LINE ───────────────────────────
+  // Copy any listing block above, paste it here, and increment the id number.
+
+]; // ← DO NOT DELETE THIS LINE
+
+
+// ── DO NOT EDIT BELOW THIS LINE ────────────────────────────────
 const listings = listingsData.map(l => ({
   ...l,
+  _rawImages: l.images || [],   // hardcoded fallbacks, accessible without the getter
   get images() { return [...getUploads(l.id), ...l.images]; }
 }));
