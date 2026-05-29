@@ -186,24 +186,28 @@
 
     /* Features list */
     .features-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
       margin-top: 4px;
     }
     .feature-item {
-      font-size: 14px;
+      font-size: 13px;
       color: #6f6f6f;
-      font-weight: 300;
+      font-weight: 400;
+      background: #f7f7f7;
+      border: 1px solid #e8e8e8;
+      border-radius: 20px;
+      padding: 5px 14px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
     .feature-item::before {
       content: '✓';
       color: #bc5d1f;
       font-weight: 700;
-      font-size: 12px;
+      font-size: 11px;
       flex-shrink: 0;
     }
 
@@ -405,8 +409,8 @@
           <span>Loading map…</span>
         </div>
 
-        <div class="detail-section-title">All Photos</div>
-        <div class="photo-grid" id="detailPhotoGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;margin-top:4px;"></div>
+        <div class="detail-section-title" id="allPhotosTitle" style="display:none">All Photos</div>
+        <div class="photo-grid" id="detailPhotoGrid" style="display:none;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;margin-top:4px;"></div>
       </div>
 
       <!-- RIGHT: Sidebar -->
@@ -545,6 +549,7 @@ function initPage(l) {
     <div class="detail-meta-item"><div class="detail-meta-label">Rent</div><div class="detail-meta-val" style="color:#ab4000">${l.price}</div></div>
     <div class="detail-meta-item"><div class="detail-meta-label">Beds</div><div class="detail-meta-val">${bedLabel(l.beds)}</div></div>
     <div class="detail-meta-item"><div class="detail-meta-label">Baths</div><div class="detail-meta-val">${l.baths}</div></div>
+    ${l.sqft ? `<div class="detail-meta-item"><div class="detail-meta-label">Sq Ft</div><div class="detail-meta-val">${l.sqft.toLocaleString()} ft²</div></div>` : ''}
     <div class="detail-meta-item"><div class="detail-meta-label">Available</div><div class="detail-meta-val">${l.available}</div></div>
     ${l.yearBuilt ? `<div class="detail-meta-item"><div class="detail-meta-label">Year Built</div><div class="detail-meta-val">${l.yearBuilt}</div></div>` : ''}
   `;
@@ -560,7 +565,12 @@ function initPage(l) {
   document.getElementById('sideRows').innerHTML = `
     <div class="sidebar-row"><span class="sidebar-row-label">Bedrooms</span><span class="sidebar-row-val">${bedLabel(l.beds)}</span></div>
     <div class="sidebar-row"><span class="sidebar-row-label">Bathrooms</span><span class="sidebar-row-val">${l.baths}</span></div>
+    ${l.sqft ? `<div class="sidebar-row"><span class="sidebar-row-label">Sq Ft</span><span class="sidebar-row-val">${l.sqft.toLocaleString()} ft²</span></div>` : ''}
     <div class="sidebar-row"><span class="sidebar-row-label">Status</span><span class="sidebar-row-val">${l.statusLabel}</span></div>
+    ${l.deposit ? `<div class="sidebar-row"><span class="sidebar-row-label">Deposit</span><span class="sidebar-row-val">${l.deposit}</span></div>` : ''}
+    ${l.parking ? `<div class="sidebar-row"><span class="sidebar-row-label">Parking</span><span class="sidebar-row-val">${l.parking}</span></div>` : ''}
+    ${l.laundry ? `<div class="sidebar-row"><span class="sidebar-row-label">Laundry</span><span class="sidebar-row-val">${l.laundry}</span></div>` : ''}
+    ${l.pets ? `<div class="sidebar-row"><span class="sidebar-row-label">Pets</span><span class="sidebar-row-val">${l.pets}</span></div>` : ''}
     ${l.yearBuilt ? `<div class="sidebar-row"><span class="sidebar-row-label">Year Built</span><span class="sidebar-row-val">${l.yearBuilt}</span></div>` : ''}
     <div class="sidebar-row"><span class="sidebar-row-label">City</span><span class="sidebar-row-val">${l.city.split(',')[0]}</span></div>
   `;
@@ -649,6 +659,10 @@ function initPhotos(l) {
       onerror="this.style.display='none'" />`
   ).join('');
 
+  if (heroImgs.length > 0) {
+    document.getElementById('allPhotosTitle').style.display = 'block';
+    grid.style.display = 'grid';
+  }
   grid.innerHTML = heroImgs.map((src, i) =>
     `<div style="aspect-ratio:4/3;overflow:hidden;border-radius:6px;cursor:zoom-in;border:1px solid #eee;"
       onclick="openLb(${i})">
@@ -686,9 +700,12 @@ function showPlaceholder() {
   document.getElementById('heroTrack').innerHTML =
     `<div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;background:#f5f5f5;">
       <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-      <span style="color:#bbb;font-size:14px;font-weight:300;">Photos available on live site</span>
+      <span style="color:#bbb;font-size:14px;font-weight:300;">Photos coming soon</span>
+      <a href="tel:+15305706192" style="color:#bc5d1f;font-size:13px;font-weight:700;font-family:'Martel',serif;">📞 Call (530) 570-6192 to schedule a showing</a>
     </div>`;
   document.getElementById('heroCount').textContent = '—';
+  document.getElementById('allPhotosTitle').style.display = 'none';
+  document.getElementById('detailPhotoGrid').style.display = 'none';
   heroImgs = [];
 }
 
