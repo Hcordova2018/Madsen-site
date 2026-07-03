@@ -186,7 +186,8 @@ const listingsData = [
     
     images: [
       'https://madsenpropertymgmt.com/public/uploads/1_-_910_Main_Front.jpg',
-      'https://madsenpropertymgmt.com/public/uploads/2_-_910_Front.jpg'
+      'https://madsenpropertymgmt.com/public/uploads/2_-_910_Front.jpg',
+      'https://raw.githubusercontent.com/Hcordova2018/Madsen-site/main/images/sequoia-dog-poop-35gxl7-1.png'
     ],
     tag: 'chico',
   },
